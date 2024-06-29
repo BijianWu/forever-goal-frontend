@@ -4,6 +4,7 @@ import { theme } from "./Theme";
 import { Route, Routes } from "react-router-dom";
 import Home from "./page/Home";
 import EmptyLayout from "./layout/EmptyLayout";
+import Register from "./page/Register";
 
 export default function App(){
 
@@ -12,7 +13,7 @@ export default function App(){
             <Routes>
                 <Route path="/" element={<EmptyLayout/>}>
                     <Route index element={<Home/>} />
-                    
+                    <Route path="register" element={<Register/>} />
                 </Route>
             </Routes>
 
