@@ -1,0 +1,70 @@
+{
+  "name": "forever-goal-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "homepage": "https://bijianwu.github.io/forever-goal-frontend",
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.8",
+    "@mui/icons-material": "^5.14.3",
+    "@mui/lab": "^5.0.0-alpha.153",
+    "@mui/material": "^5.14.5",
+    "@mui/x-date-pickers": "^6.11.2",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.4.0",
+    "date-fns": "^2.30.0",
+    "date-fns-tz": "^2.0.0",
+    "dayjs": "^1.11.9",
+    "formik": "^2.4.5",
+    "i18next": "^22.4.15",
+    "i18next-http-backend": "^2.2.0",
+    "moment": "^2.29.4",
+    "react": "^18.2.0",
+    "react-code-blocks": "^0.1.5",
+    "react-dom": "^18.2.0",
+    "react-i18next": "^12.2.2",
+    "react-scripts": "^5.0.1",
+    "react-spring-carousel": "^2.0.19",
+    "sass": "^1.62.1",
+    "web-vitals": "^2.1.4",
+    "yup": "^1.3.2"
+  },
+  "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "sass": "sass src/assets/sass:src/assets/css --watch --no-source-map"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.1",
+    "react-router-dom": "^6.9.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
