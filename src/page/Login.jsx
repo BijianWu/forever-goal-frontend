@@ -1,8 +1,10 @@
 import { Button, Divider, Stack, TextField } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import DataStoreContext from "../DataStoreContext";
 
 export default function Login(){
+    const dataStoreContext = useContext(DataStoreContext);
 
     const [email, setEmail]  = useState("");
     const [password, setPassword]  = useState("");
@@ -14,7 +16,14 @@ export default function Login(){
             password: password
           })
           .then(function (response) {
+            dataStoreContext.setEmail(email);
+
             console.log(response);
+            dataStoreContext.setId(response.data.id);
+            dataStoreContext.setEmail(response.data.email);
+            dataStoreContext.setFirstName(response.data.firstName);
+            dataStoreContext.setLastName(response.data.lastName);
+            dataStoreContext.setToken(response.data.token);
           })
           .catch(function (error) {
             console.log(error);

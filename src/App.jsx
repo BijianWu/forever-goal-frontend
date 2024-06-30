@@ -6,19 +6,21 @@ import Home from "./page/Home";
 import EmptyLayout from "./layout/EmptyLayout";
 import Register from "./page/Register";
 import Login from "./page/Login";
+import DataStoreProvider from "./DataStoreProvider";
 
 export default function App(){
 
     return <>
         <ThemeProvider theme={theme}>
-            <Routes>
-                <Route path="/" element={<EmptyLayout/>}>
-                    <Route index element={<Home/>} />
-                    <Route path="register" element={<Register/>} />
-                    <Route path="login" element={<Login/>} />
-                </Route>
-            </Routes>
-
+            <DataStoreProvider>
+                <Routes>
+                    <Route path="/" element={<EmptyLayout/>}>
+                        <Route index element={<Home/>} />
+                        <Route path="register" element={<Register/>} />
+                        <Route path="login" element={<Login/>} />
+                    </Route>
+                </Routes>
+            </DataStoreProvider>
         </ThemeProvider>
     </>
 }
