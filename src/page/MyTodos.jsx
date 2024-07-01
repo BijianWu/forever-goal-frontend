@@ -23,8 +23,8 @@ export default function MyTodos(){
         });
     }, []);
 
-    const markAsComplete = (id) => {
-        axios.patch(process.env.REACT_APP_BACKEND_URL + '/todos/' + id, {}, { withCredentials: true})
+    const markAsComplete = (id, completed) => {
+        axios.patch(process.env.REACT_APP_BACKEND_URL + '/todos/' + id, { completed: completed}, { withCredentials: true})
           .then(function (response) {
             console.log(response);
         
@@ -33,7 +33,7 @@ export default function MyTodos(){
                   // No change
                   return {
                     ...todo,
-                    completed: true
+                    completed: completed
                   };
                 } else {
                   return todo;
@@ -73,7 +73,7 @@ export default function MyTodos(){
                             <TableCell align="right">{row.item}</TableCell>
                             <TableCell align="right">{row.completed ? <Chip label="yes" color="success"/> : <Chip label="not yet"/>}</TableCell>
                             <TableCell align="right">
-                                {row.completed ?  <Button variant="contained" disabled></Button> : <Button variant="contained" onClick={ () => markAsComplete(row.id)}>Mark as complete</Button>}
+                                {row.completed ?  <Button variant="contained" color="warning" onClick={ () => markAsComplete(row.id, false)}>Mark as todo</Button> : <Button variant="contained" onClick={ () => markAsComplete(row.id, true)}>Mark as complete</Button>}
                             </TableCell>
                             </TableRow>
                         ))}
