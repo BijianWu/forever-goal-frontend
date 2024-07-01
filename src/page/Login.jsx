@@ -1,6 +1,6 @@
 import { Button, Divider, Stack, TextField } from "@mui/material";
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DataStoreContext from "../DataStoreContext";
 import { useNavigate } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
@@ -32,6 +32,15 @@ export default function Login(){
             enqueueSnackbar("Error during login, please try again", {variant: "error"})
           });
     }
+
+    useEffect(() => {
+      // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
+      const matched = document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/)
+      console.log(matched)
+      if(matched !== null){
+        navigate("/my-todos");
+      }
+    }, []);
 
     return <>
         <h1>Login page</h1>

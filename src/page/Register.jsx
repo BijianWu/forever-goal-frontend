@@ -1,6 +1,6 @@
 import { Button, Divider, Stack, TextField } from "@mui/material";
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DataStoreContext from "../DataStoreContext";
 import { enqueueSnackbar } from "notistack";
@@ -13,6 +13,14 @@ export default function Register(){
     const [newPassword, setNewPassword]  = useState("");
     const [confirmPassword, setConfirmPassword]  = useState("");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const matched = document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/)
+        console.log(matched)
+        if(matched !== null){
+          navigate("/my-todos");
+        }
+      }, []);
 
     const onRegisterClicked = (e) => {
         console.log("onRegisterClicked ");
