@@ -16,7 +16,7 @@ export default function Register(){
     const onRegisterClicked = (e) => {
         console.log("onRegisterClicked ");
 
-        axios.post('http://localhost:9090/register', {
+        axios.post(process.env.REACT_APP_BACKEND_URL + '/register', {
             firstName: firstName,
             lastName: lastName,
             email: email,

@@ -12,7 +12,7 @@ export default function Login(){
     const onRegisterClicked = (e) => {
         console.log("onRegisterClicked ");
 
-        axios.post('http://localhost:9090/login', {
+        axios.post(process.env.REACT_APP_BACKEND_URL + '/login', {
             email: email,
             password: password
           }, { withCredentials: true})

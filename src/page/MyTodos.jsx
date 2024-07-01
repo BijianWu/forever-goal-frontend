@@ -24,7 +24,7 @@ export default function MyTodos(){
     }, []);
 
     const markAsComplete = (id) => {
-        axios.patch('http://localhost:9090/todos/' + id, {}, { withCredentials: true})
+        axios.patch(process.env.REACT_APP_BACKEND_URL + '/todos/' + id, {}, { withCredentials: true})
           .then(function (response) {
             console.log(response);
         
