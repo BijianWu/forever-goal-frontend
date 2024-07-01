@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DataStoreContext from "./DataStoreContext";
 
 const DataStoreProvider = ({children}) => {
@@ -7,6 +7,9 @@ const DataStoreProvider = ({children}) => {
     const [firstName, setFirstName]  = useState("");
     const [lastName, setLastName]  = useState("");
     const [token, setToken]  = useState("");
+
+    useEffect(() => {
+    }, [])
 
     const value = {
         id,

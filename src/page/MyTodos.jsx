@@ -7,7 +7,7 @@ export default function MyTodos(){
 
     const [todos, setTodos] = useState([]);
     useEffect(() => {
-        axios.get(process.env.REACT_APP_BACKEND_URL + '/todos', { headers: { 'Authorization': 'Bearer ' +dataStoreContext.token}})
+        axios.get(process.env.REACT_APP_BACKEND_URL + '/todos', { withCredentials: true })
         .then(function (response) {
           // handle success
           console.log(response);

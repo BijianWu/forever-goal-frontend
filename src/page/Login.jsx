@@ -15,7 +15,7 @@ export default function Login(){
         axios.post('http://localhost:9090/login', {
             email: email,
             password: password
-          })
+          }, { withCredentials: true})
           .then(function (response) {
             navigate("/my-todos");
             console.log(response);

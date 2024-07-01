@@ -21,7 +21,7 @@ export default function Register(){
             lastName: lastName,
             email: email,
             password: newPassword
-          })
+          }, { withCredentials: true})
           .then(function (response) {
             console.log(response);
             navigate("/my-todos");
