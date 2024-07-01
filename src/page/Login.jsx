@@ -17,7 +17,6 @@ export default function Login(){
             password: password
           })
           .then(function (response) {
-            dataStoreContext.setEmail(email);
             navigate("/my-todos");
             console.log(response);
             dataStoreContext.setId(response.data.id);

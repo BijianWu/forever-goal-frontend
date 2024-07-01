@@ -1,14 +1,18 @@
 import { Button, Divider, Stack, TextField } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import DataStoreContext from "../DataStoreContext";
 
 export default function Register(){
-
+    const dataStoreContext = useContext(DataStoreContext);
     const [email, setEmail]  = useState("");
     const [firstName, setFirstName]  = useState("");
     const [lastName, setLastName]  = useState("");
     const [newPassword, setNewPassword]  = useState("");
     const [confirmPassword, setConfirmPassword]  = useState("");
+    const navigate = useNavigate();
+
     const onRegisterClicked = (e) => {
         console.log("onRegisterClicked ");
 
@@ -20,6 +24,13 @@ export default function Register(){
           })
           .then(function (response) {
             console.log(response);
+            navigate("/my-todos");
+            console.log(response);
+            dataStoreContext.setId(response.data.id);
+            dataStoreContext.setEmail(response.data.email);
+            dataStoreContext.setFirstName(response.data.firstName);
+            dataStoreContext.setLastName(response.data.lastName);
+            dataStoreContext.setToken(response.data.token);
           })
           .catch(function (error) {
             console.log(error);
