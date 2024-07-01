@@ -2,10 +2,11 @@ import { Button, Divider, Stack, TextField } from "@mui/material";
 import axios from "axios";
 import { useContext, useState } from "react";
 import DataStoreContext from "../DataStoreContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Login(){
     const dataStoreContext = useContext(DataStoreContext);
-
+    const navigate = useNavigate();
     const [email, setEmail]  = useState("");
     const [password, setPassword]  = useState("");
     const onRegisterClicked = (e) => {
@@ -17,7 +18,7 @@ export default function Login(){
           })
           .then(function (response) {
             dataStoreContext.setEmail(email);
-
+            navigate("/my-todos");
             console.log(response);
             dataStoreContext.setId(response.data.id);
             dataStoreContext.setEmail(response.data.email);

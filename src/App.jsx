@@ -7,6 +7,7 @@ import EmptyLayout from "./layout/EmptyLayout";
 import Register from "./page/Register";
 import Login from "./page/Login";
 import DataStoreProvider from "./DataStoreProvider";
+import MyTodos from "./page/MyTodos";
 
 export default function App(){
 
@@ -18,6 +19,7 @@ export default function App(){
                         <Route index element={<Home/>} />
                         <Route path="register" element={<Register/>} />
                         <Route path="login" element={<Login/>} />
+                        <Route path="my-todos" element={<MyTodos/>} />
                     </Route>
                 </Routes>
             </DataStoreProvider>
