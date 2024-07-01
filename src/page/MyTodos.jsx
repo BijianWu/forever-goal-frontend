@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react"
 import DataStoreContext from "../DataStoreContext";
 import { Button, Chip, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { enqueueSnackbar } from "notistack";
 
 export default function MyTodos(){
     const dataStoreContext = useContext(DataStoreContext);
@@ -41,9 +42,11 @@ export default function MyTodos(){
               });
               // Re-render with the new array
               setTodos(nextTodos);
+              enqueueSnackbar("Todo updated", {variant: "success"})
           })
           .catch(function (error) {
             console.log(error);
+            enqueueSnackbar("Error updating todo", {variant: "error"})
           });
     }
 

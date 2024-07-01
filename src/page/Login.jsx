@@ -3,6 +3,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import DataStoreContext from "../DataStoreContext";
 import { useNavigate } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
 
 export default function Login(){
     const dataStoreContext = useContext(DataStoreContext);
@@ -24,9 +25,11 @@ export default function Login(){
             dataStoreContext.setFirstName(response.data.firstName);
             dataStoreContext.setLastName(response.data.lastName);
             dataStoreContext.setToken(response.data.token);
+            enqueueSnackbar("Welcome back " + response.data.firstName, {variant: "success"})
           })
           .catch(function (error) {
             console.log(error);
+            enqueueSnackbar("Error during login, please try again", {variant: "error"})
           });
     }
 
