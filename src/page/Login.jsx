@@ -18,7 +18,7 @@ export default function Login(){
             password: password
           }, { withCredentials: true})
           .then(function (response) {
-            navigate("/my-todos");
+            navigate("/");
             console.log(response);
             dataStoreContext.setId(response.data.id);
             dataStoreContext.setEmail(response.data.email);
@@ -38,7 +38,7 @@ export default function Login(){
       const matched = document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/)
       console.log(matched)
       if(matched !== null){
-        navigate("/my-todos");
+        navigate("/");
       }
     }, []);
 

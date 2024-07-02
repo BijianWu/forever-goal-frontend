@@ -18,7 +18,7 @@ export default function Register(){
         const matched = document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/)
         console.log(matched)
         if(matched !== null){
-          navigate("/my-todos");
+          navigate("/");
         }
       }, []);
 
@@ -33,7 +33,7 @@ export default function Register(){
           }, { withCredentials: true})
           .then(function (response) {
             console.log(response);
-            navigate("/my-todos");
+            navigate("/");
             console.log(response);
             dataStoreContext.setId(response.data.id);
             dataStoreContext.setEmail(response.data.email);
