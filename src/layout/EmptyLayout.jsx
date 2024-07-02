@@ -5,7 +5,7 @@ const EmptyLayout = () => {
 
     return (
       <>
-        <Container maxWidth="sm">
+        <Container maxWidth="lg">
           <Outlet />
         </Container>
 
