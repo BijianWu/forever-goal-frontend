@@ -3,9 +3,19 @@ import { useContext, useEffect, useState } from "react"
 import DataStoreContext from "../DataStoreContext";
 import { Button, Chip, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
+import { useNavigate } from "react-router-dom";
 
 export default function MyTodos(){
     const dataStoreContext = useContext(DataStoreContext);
+    const navigate = useNavigate();
+    useEffect(() => {
+        // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
+        const matched = document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/)
+        console.log(matched)
+        if(matched === null){
+          navigate("/login");
+        }
+      }, []);
 
     const [todos, setTodos] = useState([]);
     useEffect(() => {

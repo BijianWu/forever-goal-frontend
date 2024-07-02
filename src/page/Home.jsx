@@ -1,8 +1,18 @@
 import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from "@mui/material";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Home(){
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
+        const matched = document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/)
+        console.log(matched)
+        if(matched === null){
+          navigate("/login");
+        }
+      }, []);
 
     return <>
         <h1>Home page</h1>
