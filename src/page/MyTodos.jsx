@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react"
 import DataStoreContext from "../DataStoreContext";
-import { Button, Chip, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Button, Chip, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
+import HomeIcon from '@mui/icons-material/Home';
 
 export default function MyTodos(){
     const dataStoreContext = useContext(DataStoreContext);
@@ -62,6 +63,9 @@ export default function MyTodos(){
 
     return <>
         <h1>MyTodos page</h1>
+        <IconButton aria-label="home" onClick={ () => navigate("/")} sx={{ mb: 3}}>
+          <HomeIcon sx={{ fontSize: 40 }} />
+        </IconButton>
 
         {todos != null && todos.length > 0 &&
             <TableContainer component={Paper}>
