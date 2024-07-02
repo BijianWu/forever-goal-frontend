@@ -44,7 +44,7 @@ export default function Home(){
 
             <Grid item xs={12} md={6}>
                 <Card >
-                    <CardActionArea onClick={ () => navigate("/my-todos")}>
+                    <CardActionArea onClick={ () => navigate("/my-everyday-goals")}>
                         <CardMedia
                         component="img"
                         height="250"
