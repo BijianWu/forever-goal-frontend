@@ -44,8 +44,9 @@ export default function MyEverydayGoals(){
                 if (todo.id === id) {
                   return {
                     ...todo,
-                    dateUpdated: response.data[0].dateUpdated,
-                    days: response.data[0].days
+                    dateUpdated: response.data.dateUpdated,
+                    days: response.data.days,
+                    isDoneToday: true
                   };
                 } else {
                   return todo;
@@ -95,7 +96,8 @@ export default function MyEverydayGoals(){
                             <TableCell align="right">{row.dateUpdated}</TableCell>
                             <TableCell align="right">{row.days}</TableCell>
                             <TableCell align="right">
-                              <Button variant="contained" color="warning"  onClick={ () => markAsComplete(row.id, false)}>Mark as todo</Button>
+                              {row.isDoneToday ? "NONE" : <Button variant="contained" color="warning"  onClick={ () => markAsComplete(row.id, false)}>Mark as done</Button>}
+                              
                             </TableCell>
                             </TableRow>
                         ))}
