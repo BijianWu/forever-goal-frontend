@@ -6,6 +6,8 @@ import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+
 export default function MyTodos(){
     const dataStoreContext = useContext(DataStoreContext);
     const navigate = useNavigate();
@@ -65,6 +67,10 @@ export default function MyTodos(){
         <h1>MyTodos page</h1>
         <IconButton aria-label="home" onClick={ () => navigate("/")} sx={{ mb: 3}}>
           <HomeIcon sx={{ fontSize: 40 }} />
+        </IconButton>
+
+        <IconButton aria-label="add everyday goal" onClick={ () => navigate("/my-todos/add")} sx={{ mb: 3}}>
+          <AddCircleRoundedIcon sx={{ fontSize: 40 }} />
         </IconButton>
 
         {todos != null && todos.length > 0 &&
