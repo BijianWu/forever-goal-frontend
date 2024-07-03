@@ -5,6 +5,7 @@ import { Box, Button, Chip, IconButton, Link, Paper, Table, TableBody, TableCell
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 
 export default function MyEverydayGoals(){
     const dataStoreContext = useContext(DataStoreContext);
@@ -67,6 +68,10 @@ export default function MyEverydayGoals(){
 
         <IconButton aria-label="home" onClick={ () => navigate("/")} sx={{ mb: 3}}>
           <HomeIcon sx={{ fontSize: 40 }} />
+        </IconButton>
+
+        <IconButton aria-label="add everyday goal" onClick={ () => navigate("/my-everyday-goals/add")} sx={{ mb: 3}}>
+          <AddCircleRoundedIcon sx={{ fontSize: 40 }} />
         </IconButton>
 
 
