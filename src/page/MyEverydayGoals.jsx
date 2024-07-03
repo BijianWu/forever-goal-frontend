@@ -6,7 +6,7 @@ import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
-
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 export default function MyEverydayGoals(){
     const dataStoreContext = useContext(DataStoreContext);
     const navigate = useNavigate();
@@ -36,7 +36,7 @@ export default function MyEverydayGoals(){
         });
     }, []);
 
-    const markAsComplete = (id, completed) => {
+    const markAsDoneToday = (id, completed) => {
         axios.patch(process.env.REACT_APP_BACKEND_URL + '/everyday-goals/' + id, { completed: completed}, { withCredentials: true})
           .then(function (response) {
             console.log(response);
@@ -63,6 +63,21 @@ export default function MyEverydayGoals(){
           });
     }
 
+    const deleteEverydayGoal = (id) => {
+      axios.delete(process.env.REACT_APP_BACKEND_URL + '/everyday-goals/' + id, { withCredentials: true})
+        .then(function (response) {
+          console.log(response);
+    
+            // Re-render with the new array
+            setEverydayGoals(everydayGoals.filter(goal => goal.id !== id));
+            enqueueSnackbar("Goal deleted", {variant: "success"})
+        })
+        .catch(function (error) {
+          console.log(error);
+          enqueueSnackbar("Error deleting goal", {variant: "error"})
+        });
+  }
+
     return <>
         <h1>My everyday goal page</h1>
 
@@ -81,6 +96,7 @@ export default function MyEverydayGoals(){
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                     <TableRow>
+                        <TableCell></TableCell>
                         <TableCell>Id</TableCell>
                         <TableCell align="right">Item</TableCell>
                         <TableCell align="right">Date updated</TableCell>
@@ -95,13 +111,18 @@ export default function MyEverydayGoals(){
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                             <TableCell component="th" scope="row">
+                              <IconButton aria-label="delete everyday goal" onClick={ () => deleteEverydayGoal(row.id)} >
+                                <RemoveCircleIcon sx={{ fontSize: 40 }} />
+                              </IconButton>
+                            </TableCell>
+                            <TableCell component="th" scope="row">
                                 {row.id}
                             </TableCell>
                             <TableCell align="right">{row.item}</TableCell>
                             <TableCell align="right">{row.dateUpdated}</TableCell>
                             <TableCell align="right">{row.days}</TableCell>
                             <TableCell align="right">
-                              {row.isDoneToday ? "NONE" : <Button variant="contained" color="warning"  onClick={ () => markAsComplete(row.id, false)}>Mark as done</Button>}
+                              {row.isDoneToday ? "NONE" : <Button variant="contained" color="warning"  onClick={ () => markAsDoneToday(row.id, false)}>Mark as done</Button>}
                               
                             </TableCell>
                             </TableRow>
