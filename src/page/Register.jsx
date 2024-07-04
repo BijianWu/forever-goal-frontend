@@ -23,7 +23,7 @@ export default function Register(){
       }, []);
 
     const onRegisterClicked = (e) => {
-        console.log("onRegisterClicked ");
+        dataStoreContext.setIsLoading(true);
 
         axios.post(process.env.REACT_APP_BACKEND_URL + '/register', {
             firstName: firstName,
@@ -45,7 +45,11 @@ export default function Register(){
           .catch(function (error) {
             console.log(error);
             enqueueSnackbar("Error during login, please try again", {variant: "error"})
+          })
+          .finally(function () {
+            dataStoreContext.setIsLoading(false);
           });
+          
     }
 
     return <>

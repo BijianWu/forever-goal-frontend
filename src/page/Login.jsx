@@ -11,26 +11,30 @@ export default function Login(){
     const [email, setEmail]  = useState("");
     const [password, setPassword]  = useState("");
     const onRegisterClicked = (e) => {
-        console.log("onRegisterClicked ");
+      dataStoreContext.setIsLoading(true);
 
-        axios.post(process.env.REACT_APP_BACKEND_URL + '/login', {
-            email: email,
-            password: password
-          }, { withCredentials: true})
-          .then(function (response) {
-            navigate("/");
-            console.log(response);
-            dataStoreContext.setId(response.data.id);
-            dataStoreContext.setEmail(response.data.email);
-            dataStoreContext.setFirstName(response.data.firstName);
-            dataStoreContext.setLastName(response.data.lastName);
-            dataStoreContext.setToken(response.data.token);
-            enqueueSnackbar("Welcome back " + response.data.firstName, {variant: "success"})
-          })
-          .catch(function (error) {
-            console.log(error);
-            enqueueSnackbar("Error during login, please try again", {variant: "error"})
-          });
+      axios.post(process.env.REACT_APP_BACKEND_URL + '/login', {
+          email: email,
+          password: password
+        }, { withCredentials: true})
+        .then(function (response) {
+          navigate("/");
+          console.log(response);
+          dataStoreContext.setId(response.data.id);
+          dataStoreContext.setEmail(response.data.email);
+          dataStoreContext.setFirstName(response.data.firstName);
+          dataStoreContext.setLastName(response.data.lastName);
+          dataStoreContext.setToken(response.data.token);
+          enqueueSnackbar("Welcome back " + response.data.firstName, {variant: "success"})
+        })
+        .catch(function (error) {
+          console.log(error);
+          enqueueSnackbar("Error during login, please try again", {variant: "error"})
+        })
+        .finally(function () {
+          // always executed
+          dataStoreContext.setIsLoading(false);
+        });
     }
 
     useEffect(() => {
