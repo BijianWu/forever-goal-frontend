@@ -143,6 +143,7 @@ export default function MyEverydayGoals(){
                         <TableCell align="right">Item</TableCell>
                         <TableCell align="right">Date updated</TableCell>
                         <TableCell align="right">Days</TableCell>
+                        <TableCell align="right">Status</TableCell>
                         <TableCell align="right">Action</TableCell>
                     </TableRow>
                     </TableHead>
@@ -166,6 +167,9 @@ export default function MyEverydayGoals(){
                             <TableCell align="right">{row.item}</TableCell>
                             <TableCell align="right">{row.dateUpdated}</TableCell>
                             <TableCell align="right">{row.days}</TableCell>
+                            <TableCell align="right">
+                            {row.isDoneToday ? <Chip label="done today" color="success"/> : <Chip label="not done today"/>}
+                            </TableCell>
                             <TableCell align="right">
                               {row.isDoneToday ? "NONE" : <Button variant="contained" color="warning"  onClick={ () => markAsDoneToday(row.id, false)}>Mark as done</Button>}
                               
