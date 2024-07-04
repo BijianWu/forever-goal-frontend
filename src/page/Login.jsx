@@ -53,7 +53,7 @@ export default function Login(){
           divider={<Divider orientation="horizontal" flexItem />}
           >
             <TextField label="Email" color="primary" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <TextField label="New Password" color="primary" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <TextField label="Password" type="password" color="primary" value={password} onChange={(e) => setPassword(e.target.value)} />
             <Button variant="contained" size="large" onClick={onRegisterClicked}>Login</Button>
         </Stack>
 
