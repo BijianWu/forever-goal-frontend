@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react"
 import DataStoreContext from "../DataStoreContext";
-import { Button, Chip, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Button, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
@@ -78,7 +78,38 @@ export default function MyTodos(){
         });
   }
 
+  const [open, setOpen] = useState(false);
+  const [removeItem, setRemoveItem] = useState({});
+
     return <>
+
+
+      <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Confirm the deletion"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete {removeItem.item}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button onClick={() => {
+            setOpen(false);
+            deleteTodo(removeItem.id);
+          }} autoFocus>
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+
         <h1>MyTodos page</h1>
         <IconButton aria-label="home" onClick={ () => navigate("/")} sx={{ mb: 3}}>
           <HomeIcon sx={{ fontSize: 40 }} />
@@ -107,7 +138,10 @@ export default function MyTodos(){
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                             <TableCell component="th" scope="row">
-                              <IconButton aria-label="delete todo" onClick={ () => deleteTodo(row.id)} >
+                              <IconButton aria-label="delete todo" onClick={ () => {
+                                setOpen(true);
+                                setRemoveItem({id: row.id, item: row.item});
+                              }} > 
                                 <RemoveCircleIcon sx={{ fontSize: 40 }} />
                               </IconButton>
                             </TableCell>
