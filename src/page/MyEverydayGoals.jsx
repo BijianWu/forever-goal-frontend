@@ -139,8 +139,8 @@ export default function MyEverydayGoals(){
                     <TableHead>
                     <TableRow>
                         <TableCell></TableCell>
-                        <TableCell>Id</TableCell>
-                        <TableCell align="right">Item</TableCell>
+                        {/* <TableCell>Id</TableCell> */}
+                        <TableCell align="left">Item</TableCell>
                         <TableCell align="right">Date updated</TableCell>
                         <TableCell align="right">Days</TableCell>
                         <TableCell align="right">Status</TableCell>
@@ -161,10 +161,10 @@ export default function MyEverydayGoals(){
                                 <RemoveCircleIcon sx={{ fontSize: 40 }} />
                               </IconButton>
                             </TableCell>
-                            <TableCell component="th" scope="row">
+                            {/* <TableCell component="th" scope="row">
                                 {row.id}
-                            </TableCell>
-                            <TableCell align="right">{row.item}</TableCell>
+                            </TableCell> */}
+                            <TableCell align="left">{row.item}</TableCell>
                             <TableCell align="right">{row.dateUpdated}</TableCell>
                             <TableCell align="right">{row.days}</TableCell>
                             <TableCell align="right">

@@ -134,8 +134,8 @@ export default function MyTodos(){
                     <TableHead>
                     <TableRow>
                         <TableCell></TableCell>
-                        <TableCell>Id</TableCell>
-                        <TableCell align="right">Item</TableCell>
+                        {/* <TableCell>Id</TableCell> */}
+                        <TableCell align="left">Item</TableCell>
                         <TableCell align="right">completed</TableCell>
                         <TableCell align="right">Action</TableCell>
                     </TableRow>
@@ -154,10 +154,10 @@ export default function MyTodos(){
                                 <RemoveCircleIcon sx={{ fontSize: 40 }} />
                               </IconButton>
                             </TableCell>
-                            <TableCell component="th" scope="row">
+                            {/* <TableCell component="th" scope="row">
                                 {row.id}
-                            </TableCell>
-                            <TableCell align="right">{row.item}</TableCell>
+                            </TableCell> */}
+                            <TableCell align="left">{row.item}</TableCell>
                             <TableCell align="right">{row.completed ? <Chip label="yes" color="success"/> : <Chip label="not yet"/>}</TableCell>
                             <TableCell align="right">
                                 {row.completed ?  <Button variant="contained" color="warning"  onClick={ () => markAsComplete(row.id, false)}>Mark as todo</Button> : <Button variant="contained" onClick={ () => markAsComplete(row.id, true)}>Mark as complete</Button>}
