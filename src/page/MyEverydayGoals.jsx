@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react"
 import DataStoreContext from "../DataStoreContext";
-import { Box, Button, Chip, IconButton, Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Box, Button, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
@@ -79,7 +79,36 @@ export default function MyEverydayGoals(){
         });
   }
 
+  const [open, setOpen] = useState(false);
+  const [removeItem, setRemoveItem] = useState({});
+
     return <>
+
+      <Dialog
+          open={open}
+          onClose={() => setOpen(false)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Confirm the deletion"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to delete {removeItem.item}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setOpen(false)}>Cancel</Button>
+            <Button onClick={() => {
+              setOpen(false);
+              deleteEverydayGoal(removeItem.id);
+            }} autoFocus>
+              Confirm
+            </Button>
+          </DialogActions>
+        </Dialog>
+
         <h1>My everyday goal page</h1>
 
         <IconButton aria-label="home" onClick={ () => navigate("/")} sx={{ mb: 3}}>
@@ -112,7 +141,10 @@ export default function MyEverydayGoals(){
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                             <TableCell component="th" scope="row">
-                              <IconButton aria-label="delete everyday goal" onClick={ () => deleteEverydayGoal(row.id)} >
+                              <IconButton aria-label="delete everyday goal" onClick={ () => {
+                                setOpen(true);
+                                setRemoveItem({id: row.id, item: row.item});
+                              }} >
                                 <RemoveCircleIcon sx={{ fontSize: 40 }} />
                               </IconButton>
                             </TableCell>
