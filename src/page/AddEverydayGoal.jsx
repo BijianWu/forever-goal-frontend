@@ -24,17 +24,22 @@ export default function AddEverydayGoal(){
 
 
     const addNewEverydayGoal = (id, completed) => {
-        axios.post(process.env.REACT_APP_BACKEND_URL + '/everyday-goals', { item: name}, { withCredentials: true})
-          .then(function (response) {
-            console.log(response);
-        
-              navigate("/my-everyday-goals")
-              enqueueSnackbar("Goal added", {variant: "success"})
-          })
-          .catch(function (error) {
-            console.log(error);
-            enqueueSnackbar("Error adding goal", {variant: "error"})
-          });
+      dataStoreContext.setIsLoading(true);
+      axios.post(process.env.REACT_APP_BACKEND_URL + '/everyday-goals', { item: name}, { withCredentials: true})
+        .then(function (response) {
+          console.log(response);
+      
+            navigate("/my-everyday-goals")
+            enqueueSnackbar("Goal added", {variant: "success"})
+        })
+        .catch(function (error) {
+          console.log(error);
+          enqueueSnackbar("Error adding goal", {variant: "error"})
+        })
+        .finally(function () {
+          // always executed
+          dataStoreContext.setIsLoading(false);
+        });
     }
 
     return <>

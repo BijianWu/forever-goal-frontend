@@ -7,7 +7,7 @@ const DataStoreProvider = ({children}) => {
     const [firstName, setFirstName]  = useState("");
     const [lastName, setLastName]  = useState("");
     const [token, setToken]  = useState("");
-
+    const [isLoading, setIsLoading]  = useState(false);
     useEffect(() => {
     }, [])
 
@@ -21,7 +21,9 @@ const DataStoreProvider = ({children}) => {
         setEmail,
         setFirstName,
         setLastName,
-        setToken
+        setToken,
+        isLoading,
+        setIsLoading,
     };
 
     return(

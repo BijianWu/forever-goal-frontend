@@ -22,6 +22,7 @@ export default function MyEverydayGoals(){
 
     const [everydayGoals, setEverydayGoals] = useState([]);
     useEffect(() => {
+        dataStoreContext.setIsLoading(true);
         axios.get(process.env.REACT_APP_BACKEND_URL + '/everyday-goals', { withCredentials: true })
         .then(function (response) {
           // handle success
@@ -34,10 +35,12 @@ export default function MyEverydayGoals(){
         })
         .finally(function () {
           // always executed
+          dataStoreContext.setIsLoading(false);
         });
     }, []);
 
     const markAsDoneToday = (id, completed) => {
+      dataStoreContext.setIsLoading(true);
         axios.patch(process.env.REACT_APP_BACKEND_URL + '/everyday-goals/' + id, { completed: completed}, { withCredentials: true})
           .then(function (response) {
             console.log(response);
@@ -61,10 +64,15 @@ export default function MyEverydayGoals(){
           .catch(function (error) {
             console.log(error);
             enqueueSnackbar("Error updating goal", {variant: "error"})
+          })
+          .finally(function () {
+            // always executed
+            dataStoreContext.setIsLoading(false);
           });
     }
 
     const deleteEverydayGoal = (id) => {
+      dataStoreContext.setIsLoading(true);
       axios.delete(process.env.REACT_APP_BACKEND_URL + '/everyday-goals/' + id, { withCredentials: true})
         .then(function (response) {
           console.log(response);
@@ -76,6 +84,10 @@ export default function MyEverydayGoals(){
         .catch(function (error) {
           console.log(error);
           enqueueSnackbar("Error deleting goal", {variant: "error"})
+        })
+        .finally(function () {
+          // always executed
+          dataStoreContext.setIsLoading(false);
         });
   }
 

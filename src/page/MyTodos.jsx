@@ -22,6 +22,7 @@ export default function MyTodos(){
 
     const [todos, setTodos] = useState([]);
     useEffect(() => {
+      dataStoreContext.setIsLoading(true);
         axios.get(process.env.REACT_APP_BACKEND_URL + '/todos', { withCredentials: true })
         .then(function (response) {
           // handle success
@@ -33,37 +34,42 @@ export default function MyTodos(){
           console.log(error);
         })
         .finally(function () {
-          // always executed
+          dataStoreContext.setIsLoading(false);
         });
     }, []);
 
     const markAsComplete = (id, completed) => {
-        axios.patch(process.env.REACT_APP_BACKEND_URL + '/todos/' + id, { completed: completed}, { withCredentials: true})
-          .then(function (response) {
-            console.log(response);
-        
-            const nextTodos = todos.map(todo => {
-                if (todo.id === id) {
-                  // No change
-                  return {
-                    ...todo,
-                    completed: completed
-                  };
-                } else {
-                  return todo;
-                }
-              });
-              // Re-render with the new array
-              setTodos(nextTodos);
-              enqueueSnackbar("Todo updated", {variant: "success"})
-          })
-          .catch(function (error) {
-            console.log(error);
-            enqueueSnackbar("Error updating todo", {variant: "error"})
-          });
+      dataStoreContext.setIsLoading(true);
+      axios.patch(process.env.REACT_APP_BACKEND_URL + '/todos/' + id, { completed: completed}, { withCredentials: true})
+        .then(function (response) {
+          console.log(response);
+      
+          const nextTodos = todos.map(todo => {
+              if (todo.id === id) {
+                // No change
+                return {
+                  ...todo,
+                  completed: completed
+                };
+              } else {
+                return todo;
+              }
+            });
+            // Re-render with the new array
+            setTodos(nextTodos);
+            enqueueSnackbar("Todo updated", {variant: "success"})
+        })
+        .catch(function (error) {
+          console.log(error);
+          enqueueSnackbar("Error updating todo", {variant: "error"})
+        })
+        .finally(function () {
+          dataStoreContext.setIsLoading(false);
+        });
     }
 
     const deleteTodo = (id) => {
+      dataStoreContext.setIsLoading(true);
       axios.delete(process.env.REACT_APP_BACKEND_URL + '/todos/' + id, { withCredentials: true})
         .then(function (response) {
           console.log(response);
@@ -75,6 +81,9 @@ export default function MyTodos(){
         .catch(function (error) {
           console.log(error);
           enqueueSnackbar("Error deleting todo", {variant: "error"})
+        })
+        .finally(function () {
+          dataStoreContext.setIsLoading(false);
         });
   }
 

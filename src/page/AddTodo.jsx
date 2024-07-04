@@ -24,17 +24,21 @@ export default function AddTodo(){
 
 
     const addTodo = (id, completed) => {
-        axios.post(process.env.REACT_APP_BACKEND_URL + '/todos', { item: name}, { withCredentials: true})
-          .then(function (response) {
-            console.log(response);
-        
-              navigate("/my-todos")
-              enqueueSnackbar("Todo added", {variant: "success"})
-          })
-          .catch(function (error) {
-            console.log(error);
-            enqueueSnackbar("Error adding todo", {variant: "error"})
-          });
+      dataStoreContext.setIsLoading(true);
+      axios.post(process.env.REACT_APP_BACKEND_URL + '/todos', { item: name}, { withCredentials: true})
+        .then(function (response) {
+          console.log(response);
+      
+            navigate("/my-todos")
+            enqueueSnackbar("Todo added", {variant: "success"})
+        })
+        .catch(function (error) {
+          console.log(error);
+          enqueueSnackbar("Error adding todo", {variant: "error"})
+        })
+        .finally(function () {
+          dataStoreContext.setIsLoading(false);
+        });
     }
 
     return <>
