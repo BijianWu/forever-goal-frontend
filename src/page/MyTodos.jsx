@@ -5,8 +5,8 @@ import { Button, Chip, IconButton, Paper, Table, TableBody, TableCell, TableCont
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
-
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 export default function MyTodos(){
     const dataStoreContext = useContext(DataStoreContext);
@@ -63,6 +63,21 @@ export default function MyTodos(){
           });
     }
 
+    const deleteTodo = (id) => {
+      axios.delete(process.env.REACT_APP_BACKEND_URL + '/todos/' + id, { withCredentials: true})
+        .then(function (response) {
+          console.log(response);
+    
+            // Re-render with the new array
+            setTodos(todos.filter(todo => todo.id !== id));
+            enqueueSnackbar("Todo deleted", {variant: "success"})
+        })
+        .catch(function (error) {
+          console.log(error);
+          enqueueSnackbar("Error deleting todo", {variant: "error"})
+        });
+  }
+
     return <>
         <h1>MyTodos page</h1>
         <IconButton aria-label="home" onClick={ () => navigate("/")} sx={{ mb: 3}}>
@@ -78,6 +93,7 @@ export default function MyTodos(){
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                     <TableRow>
+                        <TableCell></TableCell>
                         <TableCell>Id</TableCell>
                         <TableCell align="right">Item</TableCell>
                         <TableCell align="right">completed</TableCell>
@@ -90,6 +106,11 @@ export default function MyTodos(){
                             key={row.id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
+                            <TableCell component="th" scope="row">
+                              <IconButton aria-label="delete todo" onClick={ () => deleteTodo(row.id)} >
+                                <RemoveCircleIcon sx={{ fontSize: 40 }} />
+                              </IconButton>
+                            </TableCell>
                             <TableCell component="th" scope="row">
                                 {row.id}
                             </TableCell>

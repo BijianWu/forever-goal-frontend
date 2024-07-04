@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+
 export default function MyEverydayGoals(){
     const dataStoreContext = useContext(DataStoreContext);
     const navigate = useNavigate();
