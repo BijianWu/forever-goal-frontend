@@ -11,19 +11,19 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 export default function MyTodos(){
     const dataStoreContext = useContext(DataStoreContext);
     const navigate = useNavigate();
-    useEffect(() => {
-        // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
-        const matched = document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/)
-        console.log(matched)
-        if(matched === null){
-          navigate("/login");
-        }
-      }, []);
+    // useEffect(() => {
+    //     // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
+    //     const matched = document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/)
+    //     console.log(matched)
+    //     if(matched === null){
+    //       navigate("/login");
+    //     }
+    //   }, []);
 
     const [todos, setTodos] = useState([]);
     useEffect(() => {
       dataStoreContext.setIsLoading(true);
-        axios.get(process.env.REACT_APP_BACKEND_URL + '/todos', { withCredentials: true })
+        axios.get(process.env.REACT_APP_BACKEND_URL + '/todos', { headers: { 'Authorization': 'Bearer ' +dataStoreContext.token}, withCredentials: true })
         .then(function (response) {
           // handle success
           console.log(response);
@@ -40,7 +40,7 @@ export default function MyTodos(){
 
     const markAsComplete = (id, completed) => {
       dataStoreContext.setIsLoading(true);
-      axios.patch(process.env.REACT_APP_BACKEND_URL + '/todos/' + id, { completed: completed}, { withCredentials: true})
+      axios.patch(process.env.REACT_APP_BACKEND_URL + '/todos/' + id, { completed: completed}, { headers: { 'Authorization': 'Bearer ' +dataStoreContext.token}, withCredentials: true })
         .then(function (response) {
           console.log(response);
       
@@ -70,7 +70,7 @@ export default function MyTodos(){
 
     const deleteTodo = (id) => {
       dataStoreContext.setIsLoading(true);
-      axios.delete(process.env.REACT_APP_BACKEND_URL + '/todos/' + id, { withCredentials: true})
+      axios.delete(process.env.REACT_APP_BACKEND_URL + '/todos/' + id, { headers: { 'Authorization': 'Bearer ' +dataStoreContext.token}, withCredentials: true })
         .then(function (response) {
           console.log(response);
     

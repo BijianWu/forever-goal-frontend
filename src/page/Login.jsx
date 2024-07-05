@@ -37,14 +37,14 @@ export default function Login(){
         });
     }
 
-    useEffect(() => {
-      // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
-      const matched = document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/)
-      console.log(matched)
-      if(matched !== null){
-        navigate("/");
-      }
-    }, []);
+    // useEffect(() => {
+    //   // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
+    //   const matched = document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/)
+    //   console.log(matched)
+    //   if(matched !== null){
+    //     navigate("/");
+    //   }
+    // }, []);
 
     return <>
         <h1>Login page</h1>

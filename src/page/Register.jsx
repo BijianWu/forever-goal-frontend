@@ -14,13 +14,13 @@ export default function Register(){
     const [confirmPassword, setConfirmPassword]  = useState("");
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const matched = document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/)
-        console.log(matched)
-        if(matched !== null){
-          navigate("/");
-        }
-      }, []);
+    // useEffect(() => {
+    //     const matched = document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/)
+    //     console.log(matched)
+    //     if(matched !== null){
+    //       navigate("/");
+    //     }
+    //   }, []);
 
     const onRegisterClicked = (e) => {
         dataStoreContext.setIsLoading(true);

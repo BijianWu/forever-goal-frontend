@@ -11,21 +11,21 @@ import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
 export default function AddEverydayGoal(){
     const dataStoreContext = useContext(DataStoreContext);
     const navigate = useNavigate();
-    useEffect(() => {
-        // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
-        const matched = document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/)
-        console.log(matched)
-        if(matched === null){
-          navigate("/login");
-        }
-      }, []);
+    // useEffect(() => {
+    //     // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
+    //     const matched = document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/)
+    //     console.log(matched)
+    //     if(matched === null){
+    //       navigate("/login");
+    //     }
+    //   }, []);
 
     const [name, setName] = useState("");
 
 
     const addNewEverydayGoal = (id, completed) => {
       dataStoreContext.setIsLoading(true);
-      axios.post(process.env.REACT_APP_BACKEND_URL + '/everyday-goals', { item: name}, { withCredentials: true})
+      axios.post(process.env.REACT_APP_BACKEND_URL + '/everyday-goals', { item: name}, { headers: { 'Authorization': 'Bearer ' +dataStoreContext.token}, withCredentials: true })
         .then(function (response) {
           console.log(response);
       
