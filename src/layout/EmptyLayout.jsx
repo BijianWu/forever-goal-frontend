@@ -8,7 +8,7 @@ const EmptyLayout = () => {
     return (
       <>
         <Container maxWidth="lg">
-          <Outlet />
+          {dataStoreContext.isInitialised && <Outlet />}
           <Backdrop
             sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
             open={dataStoreContext.isLoading}

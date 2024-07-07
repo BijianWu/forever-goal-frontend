@@ -40,6 +40,7 @@ export default function Register(){
             dataStoreContext.setFirstName(response.data.firstName);
             dataStoreContext.setLastName(response.data.lastName);
             dataStoreContext.setToken(response.data.token);
+            localStorage.setItem("token", response.data.token);
             enqueueSnackbar("Welcome back " + response.data.firstName, {variant: "success"})
           })
           .catch(function (error) {

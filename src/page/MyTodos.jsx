@@ -11,14 +11,23 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 export default function MyTodos(){
     const dataStoreContext = useContext(DataStoreContext);
     const navigate = useNavigate();
-    // useEffect(() => {
-    //     // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
-    //     const matched = document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/)
-    //     console.log(matched)
-    //     if(matched === null){
-    //       navigate("/login");
-    //     }
-    //   }, []);
+    useEffect(() => {
+        // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
+        // const matched = document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/)
+        // console.log(matched)
+        // if(matched === null){
+        //   navigate("/login");
+        // }
+        if(!dataStoreContext.isInitialised){
+          console.error("dataStoreContext has not yet initialized");
+        }
+
+
+        if(!dataStoreContext.token){
+          console.error("token has not yet initialized");
+        }
+        console.log("MyTodos initialized");
+      }, []);
 
     const [todos, setTodos] = useState([]);
     useEffect(() => {
