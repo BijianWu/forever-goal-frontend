@@ -25,7 +25,7 @@ export default function MyEverydayGoals(){
       if(!dataStoreContext.token){
         console.error("token has not yet initialized");
       }
-      
+
       console.log("MyEverydayGoals initialized");
     }, []);
 
@@ -41,6 +41,7 @@ export default function MyEverydayGoals(){
         .catch(function (error) {
           // handle error
           console.log(error);
+          localStorage.removeItem("token");
           navigate("/login");
         })
         .finally(function () {

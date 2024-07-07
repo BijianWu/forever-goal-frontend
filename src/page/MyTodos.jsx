@@ -25,7 +25,7 @@ export default function MyTodos(){
         if(!dataStoreContext.token){
           console.error("token has not yet initialized");
         }
-        
+
         console.log("MyTodos initialized");
       }, []);
 
@@ -41,6 +41,7 @@ export default function MyTodos(){
         .catch(function (error) {
           // handle error
           console.log(error);
+          localStorage.removeItem("token");
           navigate("/login");
         })
         .finally(function () {
