@@ -38,7 +38,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && shx cp build/index.html build/404.html",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "sass": "sass src/assets/sass:src/assets/css --watch --no-source-map"
@@ -63,7 +63,8 @@
   },
   "devDependencies": {
     "gh-pages": "^6.1.1",
-    "react-router-dom": "^6.9.0"
+    "react-router-dom": "^6.9.0",
+    "shx": "^0.3.4"
   },
   "keywords": [],
   "author": "",
