@@ -17,8 +17,7 @@ const DataStoreProvider = ({children}) => {
         let accessToken = localStorage.getItem("token");
         // let firstName = localStorage.getItem("firstName");
         // let lastName = localStorage.getItem("lastName");
-        const decoded = jwtDecode(accessToken);
-        console.log(decoded);
+
         if(accessToken == null){
             console.log("DataStoreProvider initialized because no access token");
             setIsInitialised(true);
