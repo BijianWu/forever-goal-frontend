@@ -3,6 +3,7 @@ import DataStoreContext from "./DataStoreContext";
 import axios from "axios";
 import { enqueueSnackbar } from "notistack";
 import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 const DataStoreProvider = ({children}) => {
     const [id, setId]  = useState("");
@@ -12,7 +13,7 @@ const DataStoreProvider = ({children}) => {
     const [token, setToken]  = useState("");
     const [isLoading, setIsLoading]  = useState(true);
     const [isInitialised, setIsInitialised] = useState(false);
-
+    const navigate = useNavigate();
     useEffect(() => {
         let accessToken = localStorage.getItem("token");
         // let firstName = localStorage.getItem("firstName");
@@ -22,6 +23,7 @@ const DataStoreProvider = ({children}) => {
             console.log("DataStoreProvider initialized because no access token");
             setIsInitialised(true);
             setIsLoading(false);
+            navigate("/login");
         } else{
             async function authenticate(){
                 await axios.post(process.env.REACT_APP_BACKEND_URL + '/authenticate', {
@@ -41,6 +43,7 @@ const DataStoreProvider = ({children}) => {
                   .catch(function (error) {
                     console.log(error);
                     localStorage.removeItem("token");
+                    navigate("/login");
                     enqueueSnackbar("Error during login, please try again", {variant: "error"})
                   })
                   .finally(function () {
