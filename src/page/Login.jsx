@@ -1,4 +1,4 @@
-import { Button, Divider, Stack, TextField } from "@mui/material";
+import { Button, Divider, Link, Stack, TextField } from "@mui/material";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import DataStoreContext from "../DataStoreContext";
@@ -54,8 +54,10 @@ export default function Login(){
         <Stack spacing={2}
           divider={<Divider orientation="horizontal" flexItem />}
           >
-            <TextField label="Email" color="primary" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <TextField label="Password" type="password" color="primary" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <Button variant="text" sx={{ alignSelf: "flex-start" }} onClick={() => navigate("/register")}>Do not have account, register now</Button>
+            
+            <TextField label="Email" InputLabelProps={{shrink: true }} color="primary" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <TextField label="Password" InputLabelProps={{shrink: true }} type="password" color="primary" value={password} onChange={(e) => setPassword(e.target.value)} />
             <Button variant="contained" size="large" onClick={onRegisterClicked}>Login</Button>
         </Stack>
 

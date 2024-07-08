@@ -61,11 +61,12 @@ export default function Register(){
         <Stack spacing={2}
           divider={<Divider orientation="horizontal" flexItem />}
           >
-            <TextField label="Email" color="primary" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <TextField label="First Name" color="primary" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-            <TextField label="Last Name" color="primary" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-            <TextField label="New Password" color="primary" type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
-            <TextField label="Confirm Password" color="primary" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+            <Button variant="text" sx={{ alignSelf: "flex-start" }} onClick={() => navigate("/login")}>Already got an account, go to login</Button>
+            <TextField label="Email" InputLabelProps={{shrink: true }} color="primary" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <TextField label="First Name" InputLabelProps={{shrink: true }} color="primary" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+            <TextField label="Last Name" InputLabelProps={{shrink: true }} color="primary" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+            <TextField label="New Password" InputLabelProps={{shrink: true }} color="primary" type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+            <TextField label="Confirm Password" InputLabelProps={{shrink: true }} color="primary" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
             <Button variant="contained" size="large" onClick={onRegisterClicked}>Register</Button>
         </Stack>
 
