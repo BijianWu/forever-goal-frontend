@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import DataStoreContext from "./DataStoreContext";
 import axios from "axios";
 import { enqueueSnackbar } from "notistack";
+import { jwtDecode } from "jwt-decode";
 
 const DataStoreProvider = ({children}) => {
     const [id, setId]  = useState("");
@@ -16,7 +17,8 @@ const DataStoreProvider = ({children}) => {
         let accessToken = localStorage.getItem("token");
         // let firstName = localStorage.getItem("firstName");
         // let lastName = localStorage.getItem("lastName");
-
+        const decoded = jwtDecode(accessToken);
+        console.log(decoded);
         if(accessToken == null){
             console.log("DataStoreProvider initialized because no access token");
             setIsInitialised(true);
@@ -30,8 +32,12 @@ const DataStoreProvider = ({children}) => {
                     // navigate("/");
                     console.log(response);
                     setToken(response.data.token);
+                    const decoded = jwtDecode(response.data.token);
+                    const fullNameArray = decoded.aud[1].split(" ");
+                    setFirstName(fullNameArray[0]);
+                    setLastName(fullNameArray[1]);
                     localStorage.setItem("token", response.data.token);
-                    enqueueSnackbar("Welcome back " + response.data.firstName, {variant: "success"})
+                    enqueueSnackbar("Welcome back " + fullNameArray[0], {variant: "success"})
                   })
                   .catch(function (error) {
                     console.log(error);
