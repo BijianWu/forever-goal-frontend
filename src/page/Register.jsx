@@ -1,4 +1,4 @@
-import { Button, Divider, Stack, TextField } from "@mui/material";
+import { Button, Divider, Stack, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -56,7 +56,7 @@ export default function Register(){
     }
 
     return <>
-        <h1>Register page</h1>
+        <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 1}}>Register page</Typography>
         
         <Stack spacing={2}
           divider={<Divider orientation="horizontal" flexItem />}

@@ -1,4 +1,4 @@
-import { Button, Divider, Link, Stack, TextField } from "@mui/material";
+import { Button, Divider, Link, Stack, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import DataStoreContext from "../DataStoreContext";
@@ -49,7 +49,7 @@ export default function Login(){
     }, []);
 
     return <>
-        <h1>Login page</h1>
+        <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 1}}>Login page</Typography>
         
         <Stack spacing={2}
           divider={<Divider orientation="horizontal" flexItem />}

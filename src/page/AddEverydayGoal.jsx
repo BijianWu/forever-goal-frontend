@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react"
 import DataStoreContext from "../DataStoreContext";
-import { Box, Button, Chip, Grid, IconButton, Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import { Box, Button, Chip, Grid, IconButton, Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
@@ -43,7 +43,7 @@ export default function AddEverydayGoal(){
     }
 
     return <>
-        <h1>Add everyday goal page</h1>
+        <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 1}}>Add everyday goal</Typography>
 
         <IconButton aria-label="home" onClick={ () => navigate("/")} sx={{ mb: 3}}>
           <HomeIcon sx={{ fontSize: 40 }} />

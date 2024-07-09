@@ -15,7 +15,7 @@ export default function Home(){
     //   }, []);
 
     return <>
-        <h1>Home page</h1>
+        <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 1}}>Home page</Typography>
 
         <Grid container   
             justifyContent="center"
