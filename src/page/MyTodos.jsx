@@ -154,7 +154,7 @@ export default function MyTodos(){
                  </Typography>
                  
                   <Box>
-                    {row.completed ?  <IconButton variant="contained" color="warning"  onClick={ () => markAsComplete(row.id, false)}><CheckBoxOutlineBlankIcon sx={{ fontSize: 40 }} /></IconButton> : <IconButton variant="contained" color="success" onClick={ () => markAsComplete(row.id, true)}><CheckBoxIcon sx={{ fontSize: 40 }} /></IconButton>}
+                    {row.completed ?  <IconButton variant="contained"  color="success" onClick={ () => markAsComplete(row.id, false)}><CheckBoxIcon sx={{ fontSize: 40 }} /></IconButton> : <IconButton color="warning" variant="contained"  onClick={ () => markAsComplete(row.id, true)}><CheckBoxOutlineBlankIcon sx={{ fontSize: 40 }} /></IconButton>}
   
                     <IconButton aria-label="delete todo" onClick={ () => {
                       setOpen(true);
