@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react"
 import DataStoreContext from "../DataStoreContext";
-import { Box, Button, Card, CardActions, CardContent, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, IconButton, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, IconButton, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, useMediaQuery } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
@@ -16,6 +16,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 export default function MyTodos(){
     const dataStoreContext = useContext(DataStoreContext);
     const navigate = useNavigate();
+    const matches = useMediaQuery('(min-width:600px)');
     useEffect(() => {
         // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
         // const matched = document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/)
@@ -147,13 +148,13 @@ export default function MyTodos(){
         {todos != null && todos.length > 0 &&
               todos.map((row) => (
                 <>
-              <Stack direction="row" spacing={4} justifyContent="space-between"
+              <Stack direction={matches ? "row" : "column"} spacing={matches ? 4 : 0} justifyContent="space-between"
               alignItems="center" sx={{ pb: 1}}>
-                 <Typography variant="h4"  component="div" sx={{ mb: 1.5 }}>
+                 <Typography variant="h4"  component="div" spacing={matches ? 1.5 : 0}>
                  {row.item}
                  </Typography>
                  
-                  <Box>
+                  <Stack direction={"row"} spacing={1}>
                     {row.completed ?  <IconButton variant="contained"  color="success" onClick={ () => markAsComplete(row.id, false)}><CheckBoxIcon sx={{ fontSize: 40 }} /></IconButton> : <IconButton color="warning" variant="contained"  onClick={ () => markAsComplete(row.id, true)}><CheckBoxOutlineBlankIcon sx={{ fontSize: 40 }} /></IconButton>}
   
                     <IconButton aria-label="delete todo" onClick={ () => {
@@ -163,7 +164,7 @@ export default function MyTodos(){
                       <DeleteForeverIcon sx={{ fontSize: 40 }} />
                     </IconButton>
                     
-                  </Box>
+                  </Stack>
 
               </Stack>
                 <Divider style={{width:'100%'}} sx={{mb:3}} />
