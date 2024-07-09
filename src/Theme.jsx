@@ -11,7 +11,8 @@ export const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: ['Plus Jakarta Sans', 'sans-serif'].join(','),
+    fontFamily: ['Chilanka',
+      'cursive','Plus Jakarta Sans', 'sans-serif'].join(','),
     body1: {
 
       lineHeight: "28px"

@@ -1,12 +1,17 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react"
 import DataStoreContext from "../DataStoreContext";
-import { Button, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, IconButton, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import DoneIcon from '@mui/icons-material/Done';
+
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 export default function MyTodos(){
     const dataStoreContext = useContext(DataStoreContext);
@@ -130,7 +135,7 @@ export default function MyTodos(){
       </Dialog>
 
 
-        <h1>MyTodos page</h1>
+        <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 1}}>My Todos</Typography>
         <IconButton aria-label="home" onClick={ () => navigate("/")} sx={{ mb: 3}}>
           <HomeIcon sx={{ fontSize: 40 }} />
         </IconButton>
@@ -140,44 +145,56 @@ export default function MyTodos(){
         </IconButton>
 
         {todos != null && todos.length > 0 &&
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                    <TableRow>
-                        <TableCell></TableCell>
-                        {/* <TableCell>Id</TableCell> */}
-                        <TableCell align="left">Item</TableCell>
-                        <TableCell align="right">completed</TableCell>
-                        <TableCell align="right">Action</TableCell>
-                    </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {todos.map((row) => (
-                            <TableRow
-                            key={row.id}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                            <TableCell component="th" scope="row">
-                              <IconButton aria-label="delete todo" onClick={ () => {
-                                setOpen(true);
-                                setRemoveItem({id: row.id, item: row.item});
-                              }} > 
-                                <RemoveCircleIcon sx={{ fontSize: 40 }} />
-                              </IconButton>
-                            </TableCell>
-                            {/* <TableCell component="th" scope="row">
-                                {row.id}
-                            </TableCell> */}
-                            <TableCell align="left">{row.item}</TableCell>
-                            <TableCell align="right">{row.completed ? <Chip label="yes" color="success"/> : <Chip label="not yet"/>}</TableCell>
-                            <TableCell align="right">
-                                {row.completed ?  <Button variant="contained" color="warning"  onClick={ () => markAsComplete(row.id, false)}>Mark as todo</Button> : <Button variant="contained" onClick={ () => markAsComplete(row.id, true)}>Mark as complete</Button>}
-                            </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+              todos.map((row) => (
+                <>
+              <Stack direction="row" spacing={4} justifyContent="space-between"
+              alignItems="center" sx={{ pb: 1}}>
+                 <Typography variant="h4"  component="div" sx={{ mb: 1.5 }}>
+                 {row.item}
+                 </Typography>
+                 
+                  <Box>
+                    {row.completed ?  <IconButton variant="contained" color="warning"  onClick={ () => markAsComplete(row.id, false)}><CheckBoxOutlineBlankIcon sx={{ fontSize: 40 }} /></IconButton> : <IconButton variant="contained" color="success" onClick={ () => markAsComplete(row.id, true)}><CheckBoxIcon sx={{ fontSize: 40 }} /></IconButton>}
+  
+                    <IconButton aria-label="delete todo" onClick={ () => {
+                      setOpen(true);
+                      setRemoveItem({id: row.id, item: row.item});
+                    }} > 
+                      <DeleteForeverIcon sx={{ fontSize: 40 }} />
+                    </IconButton>
+                    
+                  </Box>
+
+              </Stack>
+                <Divider style={{width:'100%'}} sx={{mb:3}} />
+                </>
+            //   <Card sx={{ minWidth: 275, m: 2 }}>
+            //   <CardContent>
+
+            //     <Typography variant="h5" component="div" sx={{ mb: 1.5 }}>
+            //     {row.item}
+            //     </Typography>
+            //     {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            //       Status {row.completed ? <Chip label="yes" color="success"/> : <Chip label="not yet"/>}
+            //     </Typography> */}
+            //     <Typography variant="body2">
+            //       Actions  
+            //     </Typography>
+            //   </CardContent>
+            //   <CardActions>
+            //   {row.completed ?  <Button variant="contained" color="warning"  onClick={ () => markAsComplete(row.id, false)}><CheckBoxOutlineBlankIcon /></Button> : <Button variant="contained" color="success" onClick={ () => markAsComplete(row.id, true)}><CheckBoxIcon /></Button>}
+
+            //   <IconButton aria-label="delete todo" onClick={ () => {
+            //     setOpen(true);
+            //     setRemoveItem({id: row.id, item: row.item});
+            //   }} > 
+            //     <RemoveCircleIcon sx={{ fontSize: 40 }} />
+            //   </IconButton>
+              
+            //   </CardActions>
+            // </Card>
+          ))
         }
+
     </>
 }
