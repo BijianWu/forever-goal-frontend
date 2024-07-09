@@ -15,7 +15,7 @@ import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 export default function MyEverydayGoals(){
     const dataStoreContext = useContext(DataStoreContext);
     const navigate = useNavigate();
-    const matches = useMediaQuery('(min-width:600px)');
+    const matches = useMediaQuery('(min-width:800px)');
 
     useEffect(() => {
       // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
@@ -167,43 +167,43 @@ export default function MyEverydayGoals(){
           <Paper elevation={2} key={row.id} sx={{mb:2, p:1}}>
           <Stack direction={matches ? "row" : "column"} spacing={0} justifyContent="space-between" alignItems={"center"}>
             <Box>
-              <Stack direction={matches ? "column" : "row"} spacing={1} alignItems={"center"} justifyContent={"center"}>
-                <Typography >
+              <Stack direction={matches ? "column" : "row"} spacing={matches ? 1 : 4} alignItems={"center"} justifyContent={"center"}>
+                <Typography variant="overline">
                   Name:
                 </Typography>
-                <Typography variant="h6" >
+                <Typography variant="h5" >
                   {row.item}
                 </Typography>
               </Stack>
             </Box>
 
             <Box>
-            <Stack direction={matches ? "column" : "row"} spacing={1} alignItems={"center"} justifyContent={"center"}>
-              <Typography>
+            <Stack direction={matches ? "column" : "row"} spacing={matches ? 1 : 4} alignItems={"center"} justifyContent={"center"}>
+              <Typography variant="overline">
                 Date updated:
               </Typography>
-              <Typography variant="h6">
+              <Typography variant="h5">
                 {row.dateUpdated}
               </Typography>
             </Stack>
             </Box>
 
             <Box>
-              <Stack direction={matches ? "column" : "row"} spacing={1} alignItems={"center"} justifyContent={"center"}>
-                <Typography>
+              <Stack direction={matches ? "column" : "row"} spacing={matches ? 1 : 4} alignItems={"center"} justifyContent={"center"}>
+                <Typography variant="overline">
                   Days:
                 </Typography>
-                <Typography variant="h6">
+                <Typography variant="h5">
                   {row.days}
                 </Typography>
               </Stack>
             </Box>
 
             <Box>
-              <Stack direction={matches ? "column" : "row"} spacing={1} alignItems={"center"} justifyContent={"center"}>
+              <Stack direction={matches ? "column" : "row"} spacing={matches ? 1 : 4} alignItems={"center"} justifyContent={"center"}>
 
 
-                <Typography>
+                <Typography variant="overline">
                   Status: 
                 </Typography>{row.isDoneToday ? <Chip label="done today" color="success"/> : <Chip label="not done today"/>}
 
@@ -211,8 +211,8 @@ export default function MyEverydayGoals(){
             </Box>
 
             <Box>
-              <Stack direction={matches ? "column" : "row"} spacing={1} alignItems={"center"} justifyContent={"center"}>
-                <Typography>
+              <Stack direction={matches ? "column" : "row"} spacing={matches ? 1 : 4} alignItems={"center"} justifyContent={"center"}>
+                <Typography variant="overline">
                   Actions:
                 </Typography>
                 <Box>
