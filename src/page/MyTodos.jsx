@@ -147,8 +147,8 @@ export default function MyTodos(){
 
         {todos != null && todos.length > 0 &&
               todos.map((row) => (
-                <>
-              <Stack direction={matches ? "row" : "column"} spacing={matches ? 4 : 0} justifyContent="space-between"
+                <Box key={row.id}>
+              <Stack   direction={matches ? "row" : "column"} spacing={matches ? 4 : 0} justifyContent="space-between"
               alignItems="center" sx={{ pb: 1}}>
                  <Typography variant="h4"  component="div" spacing={matches ? 1.5 : 0}>
                  {row.item}
@@ -168,7 +168,7 @@ export default function MyTodos(){
 
               </Stack>
                 <Divider style={{width:'100%'}} sx={{mb:3}} />
-                </>
+                </Box>
             //   <Card sx={{ minWidth: 275, m: 2 }}>
             //   <CardContent>
 
