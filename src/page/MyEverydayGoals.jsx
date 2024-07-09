@@ -1,16 +1,22 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react"
 import DataStoreContext from "../DataStoreContext";
-import { Box, Button, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Button, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Link, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, useMediaQuery } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import CheckIcon from '@mui/icons-material/Check';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 
 export default function MyEverydayGoals(){
     const dataStoreContext = useContext(DataStoreContext);
     const navigate = useNavigate();
+    const matches = useMediaQuery('(min-width:600px)');
+
     useEffect(() => {
       // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
       // const matched = document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/)
@@ -142,54 +148,66 @@ export default function MyEverydayGoals(){
           <AddCircleRoundedIcon sx={{ fontSize: 40 }} />
         </IconButton>
 
-
+        {/* {everydayGoals != null && everydayGoals.length > 0 &&
         
-        {everydayGoals != null && everydayGoals.length > 0 &&
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                    <TableRow>
-                        <TableCell></TableCell>
-                        {/* <TableCell>Id</TableCell> */}
-                        <TableCell align="left">Item</TableCell>
-                        <TableCell align="right">Date updated</TableCell>
-                        <TableCell align="right">Days</TableCell>
-                        <TableCell align="right">Status</TableCell>
-                        <TableCell align="right">Action</TableCell>
-                    </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {everydayGoals.map((row) => (
-                            <TableRow
-                            key={row.id}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                            <TableCell component="th" scope="row">
-                              <IconButton aria-label="delete everyday goal" onClick={ () => {
+          <Paper>
+            <Stack>
+              <Box>
+
+              </Box>
+
+              <Box>
+
+              </Box>
+            </Stack>
+          </Paper>
+        } */}
+
+        {everydayGoals.map((row) => (
+          <Paper elevation={2} key={row.id} sx={{mb:2, p:1}}>
+          <Stack direction={matches ? "row" : "column"} spacing={0} justifyContent="space-between" alignItems={"center"}>
+            <Box>
+              <Typography >
+                {row.item}
+              </Typography>
+            </Box>
+
+            <Box>
+            <Typography>
+              Date updated: {row.dateUpdated}
+            </Typography>
+            </Box>
+
+            <Box>
+              <Typography>
+                Days: {row.days}
+              </Typography>
+            </Box>
+
+            <Box>
+              <Stack direction={"row"} spacing={1} alignItems={"center"} justifyContent={"center"}>
+
+
+                <Typography>
+                  Status: 
+                </Typography>{row.isDoneToday ? <Chip label="done today" color="success"/> : <Chip label="not done today"/>}
+
+              </Stack>
+            </Box>
+
+            <Box>
+            {row.isDoneToday ? <Button variant="contained" color="info" disabled ><RadioButtonCheckedIcon /></Button> : <Button variant="contained" color="warning"  onClick={ () => markAsDoneToday(row.id, false)}><RadioButtonUncheckedIcon /></Button>}
+
+            <IconButton aria-label="delete everyday goal" onClick={ () => {
                                 setOpen(true);
                                 setRemoveItem({id: row.id, item: row.item});
                               }} >
-                                <RemoveCircleIcon sx={{ fontSize: 40 }} />
+                                <DeleteForeverIcon sx={{ fontSize: 40 }} />
                               </IconButton>
-                            </TableCell>
-                            {/* <TableCell component="th" scope="row">
-                                {row.id}
-                            </TableCell> */}
-                            <TableCell align="left">{row.item}</TableCell>
-                            <TableCell align="right">{row.dateUpdated}</TableCell>
-                            <TableCell align="right">{row.days}</TableCell>
-                            <TableCell align="right">
-                            {row.isDoneToday ? <Chip label="done today" color="success"/> : <Chip label="not done today"/>}
-                            </TableCell>
-                            <TableCell align="right">
-                              {row.isDoneToday ? "NONE" : <Button variant="contained" color="warning"  onClick={ () => markAsDoneToday(row.id, false)}>Mark as done</Button>}
-                              
-                            </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        }
+            </Box>
+          </Stack>
+        </Paper>
+        ))}
+
     </>
 }
