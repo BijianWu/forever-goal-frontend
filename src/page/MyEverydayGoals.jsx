@@ -167,25 +167,40 @@ export default function MyEverydayGoals(){
           <Paper elevation={2} key={row.id} sx={{mb:2, p:1}}>
           <Stack direction={matches ? "row" : "column"} spacing={0} justifyContent="space-between" alignItems={"center"}>
             <Box>
-              <Typography >
-                {row.item}
-              </Typography>
+              <Stack direction={matches ? "column" : "row"} spacing={1} alignItems={"center"} justifyContent={"center"}>
+                <Typography >
+                  Name:
+                </Typography>
+                <Typography variant="h6" >
+                  {row.item}
+                </Typography>
+              </Stack>
             </Box>
 
             <Box>
-            <Typography>
-              Date updated: {row.dateUpdated}
-            </Typography>
-            </Box>
-
-            <Box>
+            <Stack direction={matches ? "column" : "row"} spacing={1} alignItems={"center"} justifyContent={"center"}>
               <Typography>
-                Days: {row.days}
+                Date updated:
               </Typography>
+              <Typography variant="h6">
+                {row.dateUpdated}
+              </Typography>
+            </Stack>
             </Box>
 
             <Box>
-              <Stack direction={"row"} spacing={1} alignItems={"center"} justifyContent={"center"}>
+              <Stack direction={matches ? "column" : "row"} spacing={1} alignItems={"center"} justifyContent={"center"}>
+                <Typography>
+                  Days:
+                </Typography>
+                <Typography variant="h6">
+                  {row.days}
+                </Typography>
+              </Stack>
+            </Box>
+
+            <Box>
+              <Stack direction={matches ? "column" : "row"} spacing={1} alignItems={"center"} justifyContent={"center"}>
 
 
                 <Typography>
@@ -196,14 +211,22 @@ export default function MyEverydayGoals(){
             </Box>
 
             <Box>
-            {row.isDoneToday ? <Button variant="contained" color="info" disabled ><RadioButtonCheckedIcon /></Button> : <Button variant="contained" color="warning"  onClick={ () => markAsDoneToday(row.id, false)}><RadioButtonUncheckedIcon /></Button>}
+              <Stack direction={matches ? "column" : "row"} spacing={1} alignItems={"center"} justifyContent={"center"}>
+                <Typography>
+                  Actions:
+                </Typography>
+                <Box>
+                  {row.isDoneToday ? <Button variant="contained" color="info" disabled ><RadioButtonCheckedIcon /></Button> : <Button variant="contained" color="warning"  onClick={ () => markAsDoneToday(row.id, false)}><RadioButtonUncheckedIcon /></Button>}
 
-            <IconButton aria-label="delete everyday goal" onClick={ () => {
-                                setOpen(true);
-                                setRemoveItem({id: row.id, item: row.item});
-                              }} >
-                                <DeleteForeverIcon sx={{ fontSize: 40 }} />
-                              </IconButton>
+                    <IconButton aria-label="delete everyday goal" onClick={ () => {
+                      setOpen(true);
+                      setRemoveItem({id: row.id, item: row.item});
+                    }} >
+                      <DeleteForeverIcon sx={{ fontSize: 40 }} />
+                    </IconButton>
+                </Box>
+
+              </Stack>
             </Box>
           </Stack>
         </Paper>
