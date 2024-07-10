@@ -37,28 +37,43 @@ export default function MyEverydayGoals(){
 
     const [everydayGoals, setEverydayGoals] = useState([]);
     useEffect(() => {
-        dataStoreContext.setIsLoading(true);
-        axios.get(process.env.REACT_APP_BACKEND_URL + '/everyday-goals', { headers: { 'Authorization': 'Bearer ' +dataStoreContext.token}, withCredentials: true })
-        .then(function (response) {
-          // handle success
-          console.log(response);
-          setEverydayGoals(response.data);
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-          localStorage.removeItem("token");
-          navigate("/login");
-        })
-        .finally(function () {
-          // always executed
-          dataStoreContext.setIsLoading(false);
-        });
+        getCurrentGoals(dataStoreContext.token);
     }, []);
 
-    const markAsDoneToday = (id, completed) => {
+    const getCurrentGoals = async (token) => {
       dataStoreContext.setIsLoading(true);
-        axios.patch(process.env.REACT_APP_BACKEND_URL + '/everyday-goals/' + id, { completed: completed}, { headers: { 'Authorization': 'Bearer ' +dataStoreContext.token}, withCredentials: true })
+      
+      await axios.get(process.env.REACT_APP_BACKEND_URL + '/everyday-goals', { headers: { 'Authorization': 'Bearer ' +token}, withCredentials: true })
+      .then(function (response) {
+        // handle success
+        console.log(response);
+        setEverydayGoals(response.data);
+      })
+      .catch(async function (error) {
+        console.log(error)
+        if(error.response.status === 401){
+          console.log("refreshing right now")
+          // retry refresh
+          const token = await dataStoreContext.refresh();
+          await getCurrentGoals(token);
+        } else{
+        // handle error
+          console.log(error);
+          localStorage.removeItem("token");
+          localStorage.removeItem("refreshToken");
+          navigate("/login");
+          dataStoreContext.setIsLoading(false);
+        }
+
+      })
+
+      dataStoreContext.setIsLoading(false);
+
+    }
+
+    const markAsDoneToday = async (id, completed, token) => {
+      dataStoreContext.setIsLoading(true);
+        await axios.patch(process.env.REACT_APP_BACKEND_URL + '/everyday-goals/' + id, { completed: completed}, { headers: { 'Authorization': 'Bearer ' + token}, withCredentials: true })
           .then(function (response) {
             console.log(response);
         
@@ -78,19 +93,24 @@ export default function MyEverydayGoals(){
               setEverydayGoals(updatedEverydayGoals);
               enqueueSnackbar("Goal updated", {variant: "success"})
           })
-          .catch(function (error) {
-            console.log(error);
-            enqueueSnackbar("Error updating goal", {variant: "error"})
-          })
-          .finally(function () {
-            // always executed
-            dataStoreContext.setIsLoading(false);
+          .catch(async function (error) {
+            if(error.response.status === 401){
+              // retry refresh
+              const token = await dataStoreContext.refresh();
+              await markAsDoneToday(id, completed, token);
+            } else{
+              console.log(error);
+              enqueueSnackbar("Error updating goal", {variant: "error"})
+            }
+
           });
+
+          dataStoreContext.setIsLoading(false);
     }
 
-    const deleteEverydayGoal = (id) => {
+    const deleteEverydayGoal = async (id, token) => {
       dataStoreContext.setIsLoading(true);
-      axios.delete(process.env.REACT_APP_BACKEND_URL + '/everyday-goals/' + id, { headers: { 'Authorization': 'Bearer ' +dataStoreContext.token}, withCredentials: true })
+      await axios.delete(process.env.REACT_APP_BACKEND_URL + '/everyday-goals/' + id, { headers: { 'Authorization': 'Bearer ' + token}, withCredentials: true })
         .then(function (response) {
           console.log(response);
     
@@ -98,14 +118,19 @@ export default function MyEverydayGoals(){
             setEverydayGoals(everydayGoals.filter(goal => goal.id !== id));
             enqueueSnackbar("Goal deleted", {variant: "success"})
         })
-        .catch(function (error) {
-          console.log(error);
-          enqueueSnackbar("Error deleting goal", {variant: "error"})
-        })
-        .finally(function () {
-          // always executed
-          dataStoreContext.setIsLoading(false);
+        .catch(async function (error) {
+          if(error.response.status === 401){
+            // retry refresh
+            const token = await dataStoreContext.refresh();
+            await deleteEverydayGoal(id, token);
+          } else {
+            console.log(error);
+            enqueueSnackbar("Error deleting goal", {variant: "error"})
+          }
+
         });
+
+        dataStoreContext.setIsLoading(false);
   }
 
   const [open, setOpen] = useState(false);
@@ -131,7 +156,7 @@ export default function MyEverydayGoals(){
             <Button onClick={() => setOpen(false)}>Cancel</Button>
             <Button onClick={() => {
               setOpen(false);
-              deleteEverydayGoal(removeItem.id);
+              deleteEverydayGoal(removeItem.id, dataStoreContext.token);
             }} autoFocus>
               Confirm
             </Button>
@@ -216,7 +241,7 @@ export default function MyEverydayGoals(){
                   Actions:
                 </Typography>
                 <Box>
-                  {row.isDoneToday ? <Button variant="contained" color="info" disabled ><RadioButtonCheckedIcon /></Button> : <Button variant="contained" color="warning"  onClick={ () => markAsDoneToday(row.id, false)}><RadioButtonUncheckedIcon /></Button>}
+                  {row.isDoneToday ? <Button variant="contained" color="info" disabled ><RadioButtonCheckedIcon /></Button> : <Button variant="contained" color="warning"  onClick={ () => markAsDoneToday(row.id, false, dataStoreContext.token)}><RadioButtonUncheckedIcon /></Button>}
 
                     <IconButton aria-label="delete everyday goal" onClick={ () => {
                       setOpen(true);

@@ -37,27 +37,41 @@ export default function MyTodos(){
 
     const [todos, setTodos] = useState([]);
     useEffect(() => {
+        getTodos(dataStoreContext.token);
+    }, []);
+
+    const getTodos = async (token) => {
       dataStoreContext.setIsLoading(true);
-        axios.get(process.env.REACT_APP_BACKEND_URL + '/todos', { headers: { 'Authorization': 'Bearer ' +dataStoreContext.token}, withCredentials: true })
+
+      await axios.get(process.env.REACT_APP_BACKEND_URL + '/todos', { headers: { 'Authorization': 'Bearer ' + token}, withCredentials: true })
         .then(function (response) {
           // handle success
           console.log(response);
           setTodos(response.data);
         })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-          localStorage.removeItem("token");
-          navigate("/login");
-        })
-        .finally(function () {
-          dataStoreContext.setIsLoading(false);
-        });
-    }, []);
+        .catch(async function (error) {
+          if(error.response.status === 401){
+            console.log("refreshing right now")
+            // retry refresh
+            const token = await dataStoreContext.refresh();
+            await getTodos(token);
+          } else{
+            // handle error
+            console.log(error);
+            localStorage.removeItem("token");
+            localStorage.removeItem("refreshToken");
+            navigate("/login");
+          }
 
-    const markAsComplete = (id, completed) => {
+        })
+       
+        dataStoreContext.setIsLoading(false);
+    }
+
+    const markAsComplete = (id, completed, token) => {
       dataStoreContext.setIsLoading(true);
-      axios.patch(process.env.REACT_APP_BACKEND_URL + '/todos/' + id, { completed: completed}, { headers: { 'Authorization': 'Bearer ' +dataStoreContext.token}, withCredentials: true })
+
+      axios.patch(process.env.REACT_APP_BACKEND_URL + '/todos/' + id, { completed: completed}, { headers: { 'Authorization': 'Bearer ' + token}, withCredentials: true })
         .then(function (response) {
           console.log(response);
       
@@ -76,18 +90,24 @@ export default function MyTodos(){
             setTodos(nextTodos);
             enqueueSnackbar("Todo updated", {variant: "success"})
         })
-        .catch(function (error) {
-          console.log(error);
-          enqueueSnackbar("Error updating todo", {variant: "error"})
-        })
-        .finally(function () {
-          dataStoreContext.setIsLoading(false);
+        .catch(async function (error) {
+          if(error.response.status === 401){
+            const token = await dataStoreContext.refresh();
+            await markAsComplete(id, completed, token);
+          } else {
+            console.log(error);
+            enqueueSnackbar("Error updating todo", {variant: "error"})
+          }
+
         });
+
+        dataStoreContext.setIsLoading(false);
     }
 
-    const deleteTodo = (id) => {
+    const deleteTodo = async (id, token) => {
       dataStoreContext.setIsLoading(true);
-      axios.delete(process.env.REACT_APP_BACKEND_URL + '/todos/' + id, { headers: { 'Authorization': 'Bearer ' +dataStoreContext.token}, withCredentials: true })
+
+      await axios.delete(process.env.REACT_APP_BACKEND_URL + '/todos/' + id, { headers: { 'Authorization': 'Bearer ' + token}, withCredentials: true })
         .then(function (response) {
           console.log(response);
     
@@ -95,13 +115,18 @@ export default function MyTodos(){
             setTodos(todos.filter(todo => todo.id !== id));
             enqueueSnackbar("Todo deleted", {variant: "success"})
         })
-        .catch(function (error) {
-          console.log(error);
-          enqueueSnackbar("Error deleting todo", {variant: "error"})
+        .catch(async function (error) {
+          if(error.response.status === 401){
+            const token = await dataStoreContext.refresh();
+            await deleteTodo(id, token);
+          } else {
+            console.log(error);
+            enqueueSnackbar("Error deleting todo", {variant: "error"});
+          }
+
         })
-        .finally(function () {
-          dataStoreContext.setIsLoading(false);
-        });
+
+        dataStoreContext.setIsLoading(false);
   }
 
   const [open, setOpen] = useState(false);
@@ -128,7 +153,7 @@ export default function MyTodos(){
           <Button onClick={() => setOpen(false)}>Cancel</Button>
           <Button onClick={() => {
             setOpen(false);
-            deleteTodo(removeItem.id);
+            deleteTodo(removeItem.id, dataStoreContext.token);
           }} autoFocus>
             Confirm
           </Button>
@@ -155,7 +180,7 @@ export default function MyTodos(){
                     </Typography>
                     
                       <Stack direction={"row"} spacing={1}>
-                        {row.completed ?  <IconButton variant="contained"  color="success" onClick={ () => markAsComplete(row.id, false)}><CheckBoxIcon sx={{ fontSize: 40 }} /></IconButton> : <IconButton color="warning" variant="contained"  onClick={ () => markAsComplete(row.id, true)}><CheckBoxOutlineBlankIcon sx={{ fontSize: 40 }} /></IconButton>}
+                        {row.completed ?  <IconButton variant="contained"  color="success" onClick={ () => markAsComplete(row.id, false, dataStoreContext.token)}><CheckBoxIcon sx={{ fontSize: 40 }} /></IconButton> : <IconButton color="warning" variant="contained"  onClick={ () => markAsComplete(row.id, true, dataStoreContext.token)}><CheckBoxOutlineBlankIcon sx={{ fontSize: 40 }} /></IconButton>}
       
                         <IconButton aria-label="delete todo" onClick={ () => {
                           setOpen(true);

@@ -41,8 +41,9 @@ export default function Register(){
             dataStoreContext.setEmail(response.data.email);
             dataStoreContext.setFirstName(response.data.firstName);
             dataStoreContext.setLastName(response.data.lastName);
-            dataStoreContext.setToken(response.data.token);
+            dataStoreContext.setRefreshToken(response.data.refreshToken);
             localStorage.setItem("token", response.data.token);
+            localStorage.setItem("refreshToken", response.data.refreshToken);
             enqueueSnackbar("Welcome back " + response.data.firstName, {variant: "success"})
           })
           .catch(function (error) {

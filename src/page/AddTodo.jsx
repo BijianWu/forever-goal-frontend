@@ -24,22 +24,28 @@ export default function AddTodo(){
     const [name, setName] = useState("");
 
 
-    const addTodo = (id, completed) => {
+    const addTodo = async (token) => {
       dataStoreContext.setIsLoading(true);
-      axios.post(process.env.REACT_APP_BACKEND_URL + '/todos', { item: name}, { headers: { 'Authorization': 'Bearer ' +dataStoreContext.token}, withCredentials: true })
+      await axios.post(process.env.REACT_APP_BACKEND_URL + '/todos', { item: name}, { headers: { 'Authorization': 'Bearer ' + token}, withCredentials: true })
         .then(function (response) {
           console.log(response);
       
             navigate("/my-todos")
             enqueueSnackbar("Todo added", {variant: "success"})
         })
-        .catch(function (error) {
-          console.log(error);
-          enqueueSnackbar("Error adding todo", {variant: "error"})
-        })
-        .finally(function () {
-          dataStoreContext.setIsLoading(false);
+        .catch(async function (error) {
+          if(error.response.status === 401){
+            // retry refresh
+            const token = await dataStoreContext.refresh();
+            await addTodo(token);
+          } else {
+            console.log(error);
+            enqueueSnackbar("Error adding todo", {variant: "error"})
+          }
+
         });
+
+        dataStoreContext.setIsLoading(false);
     }
 
     return <>
@@ -57,7 +63,7 @@ export default function AddTodo(){
             <TextField id="filled-basic" inputProps={{ maxLength: 30, style: { fontSize: 25} }} InputLabelProps={{style: {fontSize: 20}}}  label="Name" variant="filled" value={name} onChange={ (e) => setName(e.target.value)} />
           </Grid>
           <Grid item xs={12}>
-            <Button variant="contained" color="primary"  onClick={ () => addTodo()}>Add</Button>
+            <Button variant="contained" color="primary"  onClick={ () => addTodo(dataStoreContext.token)}>Add</Button>
           </Grid>
         </Grid>
 
