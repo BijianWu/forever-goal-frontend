@@ -183,7 +183,7 @@ export default function MyEverydayGoals(){
                 Date updated:
               </Typography>
               <Typography variant="h5">
-                {row.dateUpdated}
+                {row.dateUpdated.startsWith("000") ? "N/A" : new Date(row.dateUpdated).toDateString()}
               </Typography>
             </Stack>
             </Box>
