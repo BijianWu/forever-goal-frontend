@@ -148,26 +148,26 @@ export default function MyTodos(){
         {todos != null && todos.length > 0 &&
               todos.map((row) => (
                 <Box key={row.id}>
-              <Stack   direction={matches ? "row" : "column"} spacing={matches ? 4 : 0} justifyContent="space-between"
-              alignItems="center" sx={{ pb: 1}}>
-                 <Typography variant="h4"  component="div" spacing={matches ? 1.5 : 0}>
-                 {row.item}
-                 </Typography>
-                 
-                  <Stack direction={"row"} spacing={1}>
-                    {row.completed ?  <IconButton variant="contained"  color="success" onClick={ () => markAsComplete(row.id, false)}><CheckBoxIcon sx={{ fontSize: 40 }} /></IconButton> : <IconButton color="warning" variant="contained"  onClick={ () => markAsComplete(row.id, true)}><CheckBoxOutlineBlankIcon sx={{ fontSize: 40 }} /></IconButton>}
-  
-                    <IconButton aria-label="delete todo" onClick={ () => {
-                      setOpen(true);
-                      setRemoveItem({id: row.id, item: row.item});
-                    }} > 
-                      <DeleteForeverIcon sx={{ fontSize: 40 }} />
-                    </IconButton>
+                  <Stack   direction={matches ? "row" : "column"} spacing={matches ? 4 : 0} justifyContent="space-between"
+                  alignItems="center" sx={{ pb: 1}}>
+                    <Typography variant="h5"  component="div" spacing={matches ? 1.5 : 0}>
+                    {row.item}
+                    </Typography>
                     
-                  </Stack>
+                      <Stack direction={"row"} spacing={1}>
+                        {row.completed ?  <IconButton variant="contained"  color="success" onClick={ () => markAsComplete(row.id, false)}><CheckBoxIcon sx={{ fontSize: 40 }} /></IconButton> : <IconButton color="warning" variant="contained"  onClick={ () => markAsComplete(row.id, true)}><CheckBoxOutlineBlankIcon sx={{ fontSize: 40 }} /></IconButton>}
+      
+                        <IconButton aria-label="delete todo" onClick={ () => {
+                          setOpen(true);
+                          setRemoveItem({id: row.id, item: row.item});
+                        }} > 
+                          <DeleteForeverIcon sx={{ fontSize: 40 }} />
+                        </IconButton>
+                        
+                      </Stack>
 
-              </Stack>
-                <Divider style={{width:'100%'}} sx={{mb:3}} />
+                  </Stack>
+                  <Divider style={{width:'100%'}} sx={{mb:3}} />
                 </Box>
             //   <Card sx={{ minWidth: 275, m: 2 }}>
             //   <CardContent>
