@@ -58,7 +58,7 @@ export default function AddEverydayGoal(){
 
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <TextField id="filled-basic" inputProps={{ maxLength: 12, style: { fontSize: 25} }} InputLabelProps={{style: {fontSize: 20}}} label="Name" variant="filled" value={name} onChange={ (e) => setName(e.target.value)} />
+            <TextField id="filled-basic" inputProps={{ maxLength: 30, style: { fontSize: 25} }} InputLabelProps={{style: {fontSize: 20}}} label="Name" variant="filled" value={name} onChange={ (e) => setName(e.target.value)} />
           </Grid>
           <Grid item xs={12}>
             <Button variant="contained" color="primary"  onClick={ () => addNewEverydayGoal()}>Add</Button>
