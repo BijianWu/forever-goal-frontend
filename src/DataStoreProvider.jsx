@@ -59,7 +59,12 @@ const DataStoreProvider = ({children}) => {
         }
 
     }, [])
-
+    
+    const logout = () => {
+        setToken("");
+        localStorage.removeItem("token");
+        navigate("/login");
+    }
     const value = {
         id,
         firstName,
@@ -73,7 +78,8 @@ const DataStoreProvider = ({children}) => {
         setToken,
         isLoading,
         setIsLoading,
-        isInitialised
+        isInitialised,
+        logout
     };
 
     return(

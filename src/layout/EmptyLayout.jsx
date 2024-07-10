@@ -1,13 +1,43 @@
-import { Backdrop, CircularProgress, Container } from "@mui/material";
-import React, { useContext } from "react";
+import { Avatar, Backdrop, CircularProgress, Container, Menu, MenuItem, Stack } from "@mui/material";
+import React, { useContext, useRef, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import DataStoreContext from "../DataStoreContext";
+import { deepOrange } from "@mui/material/colors";
 
 const EmptyLayout = () => {
   const dataStoreContext = useContext(DataStoreContext);
+  const avatarRef = useRef(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
     return (
       <>
         <Container maxWidth="lg">
+          <Stack  sx={{width: "100%", mt: 2}} justifyContent={"flex-end"}  alignItems={"flex-end"}>
+            <Avatar ref={avatarRef}
+            sx={{ bgcolor: deepOrange[500] }}
+            alt="Remy Sharp"
+            src="/broken-image.jpg"
+            onClick={() => setIsMenuOpen(true)}
+          >
+            {!dataStoreContext.firstName ? "" : dataStoreContext.firstName[0]}
+          </Avatar>
+          </Stack>
+
+          <Menu
+            id="basic-menu"
+            anchorEl={avatarRef.current}
+            open={isMenuOpen}
+            onClose={() => setIsMenuOpen(false)}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+
+            <MenuItem onClick={() => {
+              setIsMenuOpen(false);
+              dataStoreContext.logout();
+            }}>Logout</MenuItem>
+          </Menu>
+
           {dataStoreContext.isInitialised && <Outlet />}
           <Backdrop
             sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
