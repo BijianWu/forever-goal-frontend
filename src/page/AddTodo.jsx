@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
 
 export default function AddTodo(){
     const dataStoreContext = useContext(DataStoreContext);
@@ -47,7 +48,9 @@ export default function AddTodo(){
         <IconButton aria-label="home" onClick={ () => navigate("/")} sx={{ mb: 3}}>
           <HomeIcon sx={{ fontSize: 40 }} />
         </IconButton>
-
+        <IconButton aria-label="back to todos" onClick={ () => navigate("/my-todos")} sx={{ mb: 3}}>
+          <FirstPageIcon sx={{ fontSize: 40 }} />
+        </IconButton>
 
         <Grid container spacing={2}>
           <Grid item xs={12}>

@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
+
 
 export default function AddEverydayGoal(){
     const dataStoreContext = useContext(DataStoreContext);
@@ -49,8 +52,8 @@ export default function AddEverydayGoal(){
           <HomeIcon sx={{ fontSize: 40 }} />
         </IconButton>
 
-        <IconButton aria-label="add everyday goal" onClick={ () => navigate("/")} sx={{ mb: 3}}>
-          <AddCircleRoundedIcon sx={{ fontSize: 40 }} />
+        <IconButton aria-label="back to everyday goal" onClick={ () => navigate("/my-everyday-goals")} sx={{ mb: 3}}>
+          <FirstPageIcon sx={{ fontSize: 40 }} />
         </IconButton>
 
         <Grid container spacing={2}>
