@@ -56,8 +56,8 @@ export default function Login(){
           >
             <Button variant="text" sx={{ alignSelf: "flex-start" }} onClick={() => navigate("/register")}>Do not have account, register now</Button>
             
-            <TextField label="Email" InputLabelProps={{shrink: true }} color="primary" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <TextField label="Password" InputLabelProps={{shrink: true }} type="password" color="primary" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <TextField label="Email" inputProps={{ maxLength: 50, style: { fontSize: 25} }} InputLabelProps={{shrink: true, style: {fontSize: 20} }} color="primary" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <TextField label="Password" inputProps={{ maxLength: 50, style: { fontSize: 25} }} InputLabelProps={{shrink: true, style: {fontSize: 20} }} type="password" color="primary" value={password} onChange={(e) => setPassword(e.target.value)} />
             <Button variant="contained" size="large" onClick={onRegisterClicked}>Login</Button>
         </Stack>
 
