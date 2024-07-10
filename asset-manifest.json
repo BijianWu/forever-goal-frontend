@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/forever-goal-frontend/static/js/main.0e168842.js",
+    "main.js": "/forever-goal-frontend/static/js/main.b4ed3194.js",
     "static/media/heaven.jpg": "/forever-goal-frontend/static/media/heaven.0d5b52df09a2d875901d.jpg",
     "static/media/todo-lists.jpg": "/forever-goal-frontend/static/media/todo-lists.41fbb7b3a65d24e8ef3d.jpg",
     "index.html": "/forever-goal-frontend/index.html",
-    "main.0e168842.js.map": "/forever-goal-frontend/static/js/main.0e168842.js.map"
+    "main.b4ed3194.js.map": "/forever-goal-frontend/static/js/main.b4ed3194.js.map"
   },
   "entrypoints": [
-    "static/js/main.0e168842.js"
+    "static/js/main.b4ed3194.js"
   ]
 }
