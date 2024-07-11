@@ -68,10 +68,10 @@ export default function MyTodos(){
         dataStoreContext.setIsLoading(false);
     }
 
-    const markAsComplete = (id, completed, token) => {
+    const markAsComplete = async (id, completed, token) => {
       dataStoreContext.setIsLoading(true);
 
-      axios.patch(process.env.REACT_APP_BACKEND_URL + '/todos/' + id, { completed: completed}, { headers: { 'Authorization': 'Bearer ' + token}, withCredentials: true })
+      await axios.patch(process.env.REACT_APP_BACKEND_URL + '/todos/' + id, { completed: completed}, { headers: { 'Authorization': 'Bearer ' + token}, withCredentials: true })
         .then(function (response) {
           console.log(response);
       
