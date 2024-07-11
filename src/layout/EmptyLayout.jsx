@@ -2,7 +2,7 @@ import { Avatar, Backdrop, CircularProgress, Container, Menu, MenuItem, Stack } 
 import React, { useContext, useRef, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import DataStoreContext from "../DataStoreContext";
-import { deepOrange } from "@mui/material/colors";
+import { deepOrange, grey } from "@mui/material/colors";
 
 const EmptyLayout = () => {
   const dataStoreContext = useContext(DataStoreContext);
@@ -13,12 +13,17 @@ const EmptyLayout = () => {
         <Container maxWidth="lg">
           <Stack  sx={{width: "100%", mt: 2}} justifyContent={"flex-end"}  alignItems={"flex-end"}>
             <Avatar ref={avatarRef}
-            sx={{ bgcolor: deepOrange[500] }}
-            alt="Remy Sharp"
+            sx={{ bgcolor: !dataStoreContext.token ? grey :deepOrange[500] }}
+            color="#fff"
+            alt=""
             src="/broken-image.jpg"
-            onClick={() => setIsMenuOpen(true)}
+            onClick={() => {
+              if(!dataStoreContext.token) return;
+              
+              setIsMenuOpen(true)
+            }}
           >
-            {!dataStoreContext.firstName ? "" : dataStoreContext.firstName[0]}
+            {!dataStoreContext.token ? "" : dataStoreContext.firstName[0]}
           </Avatar>
           </Stack>
 
