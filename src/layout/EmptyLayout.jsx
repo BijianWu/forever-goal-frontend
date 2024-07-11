@@ -3,6 +3,7 @@ import React, { useContext, useRef, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import DataStoreContext from "../DataStoreContext";
 import { deepOrange, grey } from "@mui/material/colors";
+import logo from "../assets/images/logo2.png";
 
 const EmptyLayout = () => {
   const dataStoreContext = useContext(DataStoreContext);
@@ -11,20 +12,21 @@ const EmptyLayout = () => {
     return (
       <>
         <Container maxWidth="lg">
-          <Stack  sx={{width: "100%", mt: 2}} justifyContent={"flex-end"}  alignItems={"flex-end"}>
+          <Stack direction={"row"} sx={{width: "100%", mb: 2 }} justifyContent={"space-between"}  alignItems={"center"}>
+            <img style={{ height: "120px"}} src={logo} alt="logo"/>
             <Avatar ref={avatarRef}
-            sx={{ bgcolor: !dataStoreContext.token ? grey :deepOrange[500] }}
-            color="#fff"
-            alt=""
-            src="/broken-image.jpg"
-            onClick={() => {
-              if(!dataStoreContext.token) return;
-              
-              setIsMenuOpen(true)
-            }}
-          >
-            {!dataStoreContext.token ? "" : dataStoreContext.firstName[0]}
-          </Avatar>
+              sx={{ bgcolor: !dataStoreContext.token ? grey :deepOrange[500] }}
+              color="#fff"
+              alt=""
+              src="/broken-image.jpg"
+              onClick={() => {
+                if(!dataStoreContext.token) return;
+                
+                setIsMenuOpen(true)
+              }}
+            >
+              {!dataStoreContext.token ? "" : dataStoreContext.firstName[0]}
+            </Avatar>
           </Stack>
 
           <Menu
