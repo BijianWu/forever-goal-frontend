@@ -1,6 +1,6 @@
 import { Avatar, Backdrop, CircularProgress, Container, Menu, MenuItem, Stack } from "@mui/material";
 import React, { useContext, useRef, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import DataStoreContext from "../DataStoreContext";
 import { deepOrange, grey } from "@mui/material/colors";
 import logo from "../assets/images/logo2.png";
@@ -8,14 +8,18 @@ import logo from "../assets/images/logo2.png";
 const EmptyLayout = () => {
   const dataStoreContext = useContext(DataStoreContext);
   const avatarRef = useRef(null);
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
     return (
       <>
         <Container maxWidth="lg">
           <Stack direction={"row"} sx={{width: "100%", mb: 2 }} justifyContent={"space-between"}  alignItems={"center"}>
-            <img style={{ height: "120px"}} src={logo} alt="logo"/>
+            <img onClick={ () => {
+              if(!dataStoreContext.token) return;
+              navigate("/");
+            }} style={{ height: "120px", cursor: !dataStoreContext.token ? "default": "pointer"}} src={logo} alt="logo"/>
             <Avatar ref={avatarRef}
-              sx={{ bgcolor: !dataStoreContext.token ? grey :deepOrange[500] }}
+              sx={{ bgcolor: !dataStoreContext.token ? grey :deepOrange[500], cursor: !dataStoreContext.token ? "default": "pointer" }}
               color="#fff"
               alt=""
               src="/broken-image.jpg"
