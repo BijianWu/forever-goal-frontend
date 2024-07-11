@@ -162,11 +162,11 @@ export default function MyTodos(){
 
 
         <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 1}}>My Todos</Typography>
-        <IconButton aria-label="home" onClick={ () => navigate("/")} sx={{ mb: 3}}>
+        {/* <IconButton aria-label="home" onClick={ () => navigate("/")} sx={{ mb: 3}}>
           <HomeIcon sx={{ fontSize: 40 }} />
-        </IconButton>
+        </IconButton> */}
 
-        <IconButton aria-label="add everyday goal" onClick={ () => navigate("/my-todos/add")} sx={{ mb: 3}}>
+        <IconButton aria-label="add goal" onClick={ () => navigate("/my-todos/add")} sx={{ mb: 3}}>
           <AddCircleRoundedIcon sx={{ fontSize: 40 }} />
         </IconButton>
 

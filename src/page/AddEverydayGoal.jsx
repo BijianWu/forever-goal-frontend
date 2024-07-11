@@ -52,11 +52,11 @@ export default function AddEverydayGoal(){
     }
 
     return <>
-        <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 1}}>Add everyday goal</Typography>
+        <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 1}}>Add goal</Typography>
 
-        <IconButton aria-label="home" onClick={ () => navigate("/")} sx={{ mb: 3}}>
+        {/* <IconButton aria-label="home" onClick={ () => navigate("/")} sx={{ mb: 3}}>
           <HomeIcon sx={{ fontSize: 40 }} />
-        </IconButton>
+        </IconButton> */}
 
         <IconButton aria-label="back to everyday goal" onClick={ () => navigate("/my-everyday-goals")} sx={{ mb: 3}}>
           <FirstPageIcon sx={{ fontSize: 40 }} />
