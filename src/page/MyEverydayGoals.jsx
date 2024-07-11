@@ -163,7 +163,7 @@ export default function MyEverydayGoals(){
           </DialogActions>
         </Dialog>
 
-        <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 1}}>My everyday goal</Typography>
+        <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 1}}>My goals</Typography>
 
         <IconButton aria-label="home" onClick={ () => navigate("/")} sx={{ mb: 3}}>
           <HomeIcon sx={{ fontSize: 40 }} />
