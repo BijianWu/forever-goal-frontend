@@ -25,6 +25,32 @@ export default function Register(){
     }, []);
 
     const onRegisterClicked = (e) => {
+      if(!firstName){
+        enqueueSnackbar("first name cannot be empty", {variant: "error"});
+        return;
+      }
+
+      if(!lastName){
+        enqueueSnackbar("first name cannot be empty", {variant: "error"});
+        return;
+      }
+
+      if(!email){
+        enqueueSnackbar("email cannot be empty", {variant: "error"});
+        return;
+      }
+
+
+      if(!newPassword || newPassword.length <= 6){
+        enqueueSnackbar("password needs to be at least 6 characters long", {variant: "error"});
+        return;
+      }
+
+      if(newPassword !== confirmPassword){
+        enqueueSnackbar("password and confirm passward mistmatch", {variant: "error"});
+        return;
+      }
+
         dataStoreContext.setIsLoading(true);
 
         axios.post(process.env.REACT_APP_BACKEND_URL + '/register', {
@@ -64,11 +90,12 @@ export default function Register(){
           divider={<Divider orientation="horizontal" flexItem />}
           >
             <Button variant="text" sx={{ alignSelf: "flex-start" }} onClick={() => navigate("/login")}>Already got an account, go to login</Button>
-            <TextField label="Email" inputProps={{ maxLength: 50, style: { fontSize: 25} }} InputLabelProps={{shrink: true, style: {fontSize: 20} }} color="primary" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <TextField label="First Name" inputProps={{ maxLength: 50, style: { fontSize: 25} }} InputLabelProps={{shrink: true, style: {fontSize: 20} }} color="primary" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-            <TextField label="Last Name" inputProps={{ maxLength: 50, style: { fontSize: 25} }} InputLabelProps={{shrink: true, style: {fontSize: 20} }} color="primary" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-            <TextField label="New Password" inputProps={{ maxLength: 50, minLength: 6, style: { fontSize: 25} }} InputLabelProps={{shrink: true, style: {fontSize: 20} }} color="primary" type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
-            <TextField label="Confirm Password" inputProps={{ maxLength: 50, minLength: 6, style: { fontSize: 25} }} InputLabelProps={{shrink: true, style: {fontSize: 20} }} color="primary" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+            <TextField required name="firstName" label="First Name" inputProps={{ maxLength: 50, style: { fontSize: 25} }} InputLabelProps={{shrink: true, style: {fontSize: 20} }} color="primary" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+            
+            <TextField required name="lastName" label="Last Name" inputProps={{ maxLength: 50, style: { fontSize: 25} }} InputLabelProps={{shrink: true, style: {fontSize: 20} }} color="primary" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+            <TextField required name="email" label="Email" inputProps={{ maxLength: 50, style: { fontSize: 25} }} InputLabelProps={{shrink: true, style: {fontSize: 20} }} color="primary" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <TextField required name="password" label="New Password" inputProps={{ maxLength: 50, minLength: 6, style: { fontSize: 25} }} InputLabelProps={{shrink: true, style: {fontSize: 20} }} color="primary" type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+            <TextField required name="passwordConfirm" label="Confirm Password" inputProps={{ maxLength: 50, minLength: 6, style: { fontSize: 25} }} InputLabelProps={{shrink: true, style: {fontSize: 20} }} color="primary" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
             <Button variant="contained" size="large" onClick={onRegisterClicked}>Register</Button>
         </Stack>
 
