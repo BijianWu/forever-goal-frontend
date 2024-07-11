@@ -16,7 +16,7 @@ import AddTodo from "./page/AddTodo";
 export default function App(){
 
     return <>
-        <SnackbarProvider maxSnack={3}>
+        <SnackbarProvider maxSnack={3} autoHideDuration={1000}>
             <ThemeProvider theme={theme}>
                 <DataStoreProvider>
                     <Routes>
