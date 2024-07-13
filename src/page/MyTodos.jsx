@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react"
 import DataStoreContext from "../DataStoreContext";
-import { Box, Button, Card, CardActions, CardContent, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, IconButton, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, IconButton, InputLabel, MenuItem, Paper, Select, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, useMediaQuery } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
@@ -17,6 +17,15 @@ export default function MyTodos(){
     const dataStoreContext = useContext(DataStoreContext);
     const navigate = useNavigate();
     const matches = useMediaQuery('(min-width:600px)');
+    const [todos, setTodos] = useState([]);
+    const [show, setShow] = useState(0);
+
+    const handleShowChange = (event) => {
+      setShow(event.target.value);
+      const queryString = "?show=" + event.target.value;
+      getTodos(dataStoreContext.token, queryString)
+    };
+
     useEffect(() => {
         // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
         // const matched = document.cookie.match(/^(.*;)?\s*token\s*=\s*[^;]+(.*)?$/)
@@ -35,15 +44,15 @@ export default function MyTodos(){
         console.log("MyTodos initialized");
       }, []);
 
-    const [todos, setTodos] = useState([]);
     useEffect(() => {
         getTodos(dataStoreContext.token);
     }, []);
 
-    const getTodos = async (token) => {
+    const getTodos = async (token, params) => {
+      const queryString = params ? params : "";
       dataStoreContext.setIsLoading(true);
 
-      await axios.get(process.env.REACT_APP_BACKEND_URL + '/todos', { headers: { 'Authorization': 'Bearer ' + token}, withCredentials: true })
+      await axios.get(process.env.REACT_APP_BACKEND_URL + '/todos' + queryString, { headers: { 'Authorization': 'Bearer ' + token}, withCredentials: true })
         .then(function (response) {
           // handle success
           console.log(response);
@@ -54,7 +63,7 @@ export default function MyTodos(){
             console.log("refreshing right now")
             // retry refresh
             const token = await dataStoreContext.refresh();
-            await getTodos(token);
+            await getTodos(token, params);
           } else{
             // handle error
             console.log(error);
@@ -166,9 +175,28 @@ export default function MyTodos(){
           <HomeIcon sx={{ fontSize: 40 }} />
         </IconButton> */}
 
-        <IconButton aria-label="add goal" onClick={ () => navigate("/my-todos/add")} sx={{ mb: 3}}>
-          <AddCircleRoundedIcon sx={{ fontSize: 40 }} />
-        </IconButton>
+        <Stack direction={"row"} spacing={3}>
+          <IconButton aria-label="add goal" onClick={ () => navigate("/my-todos/add")} sx={{ mb: 3}}>
+            <AddCircleRoundedIcon sx={{ fontSize: 40 }} />
+          </IconButton>
+
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="show-todos-select-label">Show</InputLabel>
+              <Select
+                labelId="show-todos-select-label"
+                id="show-todos-select"
+                value={show}
+                label="Show"
+                onChange={handleShowChange}
+              >
+                <MenuItem value={0}>All</MenuItem>
+                <MenuItem value={1}>Active</MenuItem>
+                <MenuItem value={2}>Finished</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </Stack>
 
         {todos != null && todos.length > 0 &&
               todos.map((row) => (
