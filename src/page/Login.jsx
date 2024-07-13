@@ -51,7 +51,7 @@ export default function Login(){
     }, []);
 
     return <>
-        <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 1}}>Login page</Typography>
+        <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 1}}>Login</Typography>
         
         <Stack spacing={2}
           divider={<Divider orientation="horizontal" flexItem />}

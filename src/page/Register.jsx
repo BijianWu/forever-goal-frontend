@@ -84,7 +84,7 @@ export default function Register(){
     }
 
     return <>
-        <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 1}}>Register page</Typography>
+        <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 1}}>Register</Typography>
         
         <Stack spacing={2}
           divider={<Divider orientation="horizontal" flexItem />}
