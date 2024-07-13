@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import DataStoreContext from "../DataStoreContext";
 import { Box, Button, Card, CardActions, CardContent, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, IconButton, InputLabel, MenuItem, Paper, Select, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, useMediaQuery } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
@@ -14,17 +14,38 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 export default function MyTodos(){
+  const getValidatedSearchParams = () => {
+    const sParam = searchParams.get('show');
+
+    if(sParam == null){
+      return 0;
+    } else{
+      if(sParam < 0){
+        setSearchParams({ show: 0}, {replace: true});
+        return 0;
+      } else if(sParam > 2){
+        setSearchParams({ show: 2}, {replace: true});
+        return 2;
+      }
+    }
+  }
+  
     const dataStoreContext = useContext(DataStoreContext);
     const navigate = useNavigate();
     const matches = useMediaQuery('(min-width:600px)');
     const [todos, setTodos] = useState([]);
-    const [show, setShow] = useState(0);
 
+    const [searchParams, setSearchParams] = useSearchParams();
+    // const showSearchQueryParam = searchParams.get('show');
+    const [show, setShow] = useState(getValidatedSearchParams());
     const handleShowChange = (event) => {
       setShow(event.target.value);
-      const queryString = "?show=" + event.target.value;
-      getTodos(dataStoreContext.token, queryString)
+      // const queryString = "?show=" + event.target.value;
+      setSearchParams({ show: event.target.value}, {replace: true});
+      getTodos(dataStoreContext.token, event.target.value);
     };
+
+
 
     useEffect(() => {
         // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
@@ -48,8 +69,8 @@ export default function MyTodos(){
         getTodos(dataStoreContext.token);
     }, []);
 
-    const getTodos = async (token, params) => {
-      const queryString = params ? params : "";
+    const getTodos = async (token, showParam) => {
+      const queryString = showParam == null ? "?show=" + searchParams.get('show') : "?show=" + showParam;
       dataStoreContext.setIsLoading(true);
 
       await axios.get(process.env.REACT_APP_BACKEND_URL + '/todos' + queryString, { headers: { 'Authorization': 'Bearer ' + token}, withCredentials: true })
@@ -63,7 +84,7 @@ export default function MyTodos(){
             console.log("refreshing right now")
             // retry refresh
             const token = await dataStoreContext.refresh();
-            await getTodos(token, params);
+            await getTodos(token, showParam);
           } else{
             // handle error
             console.log(error);
