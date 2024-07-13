@@ -84,7 +84,7 @@ export default function MyTodos(){
         .then(function (response) {
           console.log(response);
       
-          const nextTodos = todos.map(todo => {
+          let nextTodos = todos.map(todo => {
               if (todo.id === id) {
                 // No change
                 return {
@@ -95,6 +95,13 @@ export default function MyTodos(){
                 return todo;
               }
             });
+
+            if(show == 1) {
+              nextTodos = nextTodos.filter(todo => !todo.completed);
+            } else if(show == 2) {
+              nextTodos = nextTodos.filter(todo => todo.completed);
+            }
+
             // Re-render with the new array
             setTodos(nextTodos);
             enqueueSnackbar("Todo updated", {variant: "success"})
