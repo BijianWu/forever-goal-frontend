@@ -17,7 +17,7 @@ export default function MyTodos(){
   const getValidatedSearchParams = () => {
     const sParam = searchParams.get('show');
 
-    if(sParam == null){
+    if(sParam == null || sParam === undefined){
       return 0;
     } else{
       if(sParam < 0){
@@ -28,8 +28,10 @@ export default function MyTodos(){
         return 2;
       }
     }
+
+    return sParam;
   }
-  
+
     const dataStoreContext = useContext(DataStoreContext);
     const navigate = useNavigate();
     const matches = useMediaQuery('(min-width:600px)');
