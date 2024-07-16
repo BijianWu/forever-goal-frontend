@@ -56,7 +56,7 @@ export default function AddBookmark(){
           <HomeIcon sx={{ fontSize: 40 }} />
         </IconButton> */}
 
-        <IconButton aria-label="back to todos" onClick={ () => navigate("/my-todos")} sx={{ mb: 3}}>
+        <IconButton aria-label="back to todos" onClick={ () => navigate("/my-bookmarks")} sx={{ mb: 3}}>
           <FirstPageIcon sx={{ fontSize: 40 }} />
         </IconButton>
 

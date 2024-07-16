@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react"
 import DataStoreContext from "../DataStoreContext";
-import { Box, Button, Card, CardActions, CardContent, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, IconButton, InputLabel, MenuItem, Paper, Select, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, IconButton, InputLabel, ListItem, MenuItem, Paper, Select, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, useMediaQuery } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
@@ -151,6 +151,35 @@ export default function MyBookmarks(){
                     
                       <Stack direction={"row"} spacing={1}>
       
+                      <Box
+                          sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            flexWrap: 'wrap',
+                            listStyle: 'none',
+                            p: 0.5,
+                            m: 0,
+                          }}
+                          component="ul"
+                        >
+                          {row.tags.map((data) => {
+                            let icon;
+
+                            // if (data.label === 'React') {
+                            //   icon = <TagFacesIcon />;
+                            // }
+
+                            return (
+                              <ListItem key={row.id + data}>
+                                <Chip
+                                  icon={icon}
+                                  label={data}
+                                  // onDelete={data.label === 'React' ? undefined : handleDelete(data)}
+                                />
+                              </ListItem>
+                            );
+                          })}
+                        </Box>
                         <IconButton aria-label="delete todo" onClick={ () => {
                           setOpen(true);
                           setRemoveItem({id: row.id, item: row.item});
@@ -158,6 +187,7 @@ export default function MyBookmarks(){
                           <DeleteForeverIcon sx={{ fontSize: 40 }} />
                         </IconButton>
                         
+
                       </Stack>
 
                   </Stack>
