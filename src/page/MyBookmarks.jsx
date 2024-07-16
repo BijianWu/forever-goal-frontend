@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react"
 import DataStoreContext from "../DataStoreContext";
-import { Box, Button, Card, CardActions, CardContent, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, IconButton, InputLabel, ListItem, MenuItem, Paper, Select, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, IconButton, InputLabel, ListItem, MenuItem, OutlinedInput, Paper, Select, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
@@ -38,15 +38,17 @@ export default function MyBookmarks(){
         console.log("MyTodos initialized");
       }, []);
 
+      
+  const [tagName, setTagName] = useState([]);
     useEffect(() => {
         getBookmarks(dataStoreContext.token);
-    }, []);
+    }, [tagName]);
 
     const getBookmarks = async (token) => {
 
       dataStoreContext.setIsLoading(true);
-
-      await axios.get(process.env.REACT_APP_BACKEND_URL + '/bookmarks', { headers: { 'Authorization': 'Bearer ' + token}, withCredentials: true })
+      const queryString = "?tags=" + tagName;
+      await axios.get(process.env.REACT_APP_BACKEND_URL + '/bookmarks' + queryString, { headers: { 'Authorization': 'Bearer ' + token}, withCredentials: true })
         .then(function (response) {
           // handle success
           console.log(response);
@@ -98,7 +100,49 @@ export default function MyBookmarks(){
 
   const [open, setOpen] = useState(false);
   const [removeItem, setRemoveItem] = useState({});
+  const theme = useTheme();
+  const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+  const names = [
+    'MySql',
+    'Java',
+    'Golang',
+    'Microservices',
+    'AWS',
+    'Multiplayer',
+    'Game development',
+    'CSS',
+    'Backend development',
+    'Frontend development',
+  ];
 
+  function getStyles(name, personName, theme) {
+    return {
+      fontWeight:
+        personName.indexOf(name) === -1
+          ? theme.typography.fontWeightRegular
+          : theme.typography.fontWeightMedium,
+    };
+  }
+
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setTagName(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
     return <>
 
 
@@ -138,6 +182,36 @@ export default function MyBookmarks(){
               <AddCircleRoundedIcon sx={{ fontSize: 40 }} />
             </IconButton>
 
+            <FormControl sx={{ m: 1, width: "70%" }}>
+              <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
+              <Select
+                labelId="demo-multiple-chip-label"
+                id="demo-multiple-chip"
+                multiple
+                // onClose={}
+                value={tagName}
+                onChange={handleChange}
+                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                renderValue={(selected) => (
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                    {selected.map((value) => (
+                      <Chip key={value} label={value} />
+                    ))}
+                  </Box>
+                )}
+                MenuProps={MenuProps}
+              >
+                {names.map((name) => (
+                  <MenuItem
+                    key={name}
+                    value={name}
+                    style={getStyles(name, tagName, theme)}
+                  >
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Stack>
 
         {todos != null && todos.length > 0 &&
@@ -180,13 +254,14 @@ export default function MyBookmarks(){
                             );
                           })}
                         </Box>
-                        <IconButton aria-label="delete todo" onClick={ () => {
+                        <IconButton aria-label="delete bookmark" onClick={ () => {
                           setOpen(true);
                           setRemoveItem({id: row.id, item: row.item});
                         }} > 
                           <DeleteForeverIcon sx={{ fontSize: 40 }} />
                         </IconButton>
                         
+
 
                       </Stack>
 
