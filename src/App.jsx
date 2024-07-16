@@ -12,6 +12,8 @@ import { SnackbarProvider } from "notistack";
 import MyEverydayGoals from "./page/MyEverydayGoals";
 import AddEverydayGoal from "./page/AddEverydayGoal";
 import AddTodo from "./page/AddTodo";
+import MyBookmarks from "./page/MyBookmarks";
+import AddBookmark from "./page/AddBookmark";
 
 export default function App(){
 
@@ -28,6 +30,9 @@ export default function App(){
                             <Route path="my-everyday-goals" element={<MyEverydayGoals/>} />
                             <Route path="my-everyday-goals/add" element={<AddEverydayGoal/>} />
                             <Route path="my-todos/add" element={<AddTodo/>} />
+
+                            <Route path="my-bookmarks" element={<MyBookmarks/>} />
+                            <Route path="my-bookmarks/add" element={<AddBookmark/>} />
                         </Route>
                     </Routes>
                 </DataStoreProvider>
