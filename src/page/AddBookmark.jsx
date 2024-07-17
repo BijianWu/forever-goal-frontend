@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react"
 import DataStoreContext from "../DataStoreContext";
-import { Box, Button, Chip, Grid, IconButton, Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
+import { Box, Button, Chip, FormControl, Grid, IconButton, InputLabel, Link, MenuItem, OutlinedInput, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, useTheme } from "@mui/material";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
@@ -22,12 +22,60 @@ export default function AddBookmark(){
     //   }, []);
 
     const [name, setName] = useState("");
-    const [tags, setTags] = useState("");
+    const [tagName, setTagName] = useState([]);
+    const theme = useTheme();
+    const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
+    const names = [
+      'mysql',
+      'java',
+      'golang',
+      'microservices',
+      'aws',
+      'multiplayer',
+      'game development',
+      'css',
+      'backend development',
+      'frontend development',
+    ];
+  
+    function getStyles(name, personName, theme) {
+      return {
+        fontWeight:
+          personName.indexOf(name) === -1
+            ? theme.typography.fontWeightRegular
+            : theme.typography.fontWeightMedium,
+      };
+    }
+  
+  
+    const handleChange = (event) => {
+      const {
+        target: { value },
+      } = event;
+      setTagName(
+        // On autofill we get a stringified value.
+        typeof value === 'string' ? value.split(',') : value,
+      );
+    };
 
 
     const addTodo = async (token) => {
+      let newArray = [];
+      for (let i = 0; i < tagName.length; i++) {
+        newArray.push(tagName[i].toLowerCase());
+        // tagName[i] = tagName[i].toLowerCase();
+      }
       dataStoreContext.setIsLoading(true);
-      await axios.post(process.env.REACT_APP_BACKEND_URL + '/bookmarks', { item: name, tags: tags.split(',')}, { headers: { 'Authorization': 'Bearer ' + token}, withCredentials: true })
+      await axios.post(process.env.REACT_APP_BACKEND_URL + '/bookmarks', { item: name, tags: newArray}, { headers: { 'Authorization': 'Bearer ' + token}, withCredentials: true })
         .then(function (response) {
           console.log(response);
       
@@ -65,7 +113,39 @@ export default function AddBookmark(){
             <TextField id="filled-basic" inputProps={{ maxLength: 30, style: { fontSize: 25} }} InputLabelProps={{style: {fontSize: 20}}}  label="Name" variant="filled" value={name} onChange={ (e) => setName(e.target.value)} />
           </Grid>
           <Grid item xs={12}>
-            <TextField id="filled-basic" inputProps={{ maxLength: 30, style: { fontSize: 25} }} InputLabelProps={{style: {fontSize: 20}}}  label="Tags" variant="filled" value={tags} onChange={ (e) => setTags(e.target.value)} />
+
+          <FormControl sx={{ m: 1, width: "70%" }}>
+              <InputLabel id="demo-multiple-chip-label">Tags</InputLabel>
+              <Select
+                labelId="demo-multiple-chip-label"
+                id="demo-multiple-chip"
+                multiple
+                // onClose={ () => {getBookmarks(dataStoreContext.token)}}
+                value={tagName}
+                onChange={handleChange}
+                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                renderValue={(selected) => (
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                    {selected.map((value) => (
+                      <Chip key={value} label={value} />
+                    ))}
+                  </Box>
+                )}
+                MenuProps={MenuProps}
+              >
+                {names.map((name) => (
+                  <MenuItem
+                    key={name}
+                    value={name}
+                    style={getStyles(name, tagName, theme)}
+                  >
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            {/* <TextField id="filled-basic" inputProps={{ maxLength: 30, style: { fontSize: 25} }} InputLabelProps={{style: {fontSize: 20}}}  label="Tags" variant="filled" value={tags} onChange={ (e) => setTags(e.target.value)} /> */}
           </Grid>
           <Grid item xs={12}>
             <Button variant="contained" color="primary"  onClick={ () => addTodo(dataStoreContext.token)}>Add</Button>

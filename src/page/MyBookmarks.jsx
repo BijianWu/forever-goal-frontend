@@ -111,18 +111,19 @@ const MenuProps = {
     },
   },
 };
-  const names = [
-    'MySql',
-    'Java',
-    'Golang',
-    'Microservices',
-    'AWS',
-    'Multiplayer',
-    'Game development',
-    'CSS',
-    'Backend development',
-    'Frontend development',
-  ];
+
+const names = [
+  'mysql',
+  'java',
+  'golang',
+  'microservices',
+  'aws',
+  'multiplayer',
+  'game development',
+  'css',
+  'backend development',
+  'frontend development',
+];
 
   function getStyles(name, personName, theme) {
     return {
