@@ -28,7 +28,7 @@ export default function Home(){
                         component="img"
                         height="250"
                         image={require("../assets/images/todo-lists.jpg")}
-                        alt="green iguana"
+                        alt="todo list image"
                         />
                         <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
@@ -49,7 +49,7 @@ export default function Home(){
                         component="img"
                         height="250"
                         image={require("../assets/images/heaven.jpg")}
-                        alt="green iguana"
+                        alt="goal image"
                         />
                         <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
@@ -57,6 +57,27 @@ export default function Home(){
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             click here to view all your goals
+                        </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+                <Card >
+                    <CardActionArea onClick={ () => navigate("/my-bookmarks")}>
+                        <CardMedia
+                        component="img"
+                        height="250"
+                        image={require("../assets/images/bookmark2.jpg")}
+                        alt="bookmark image"
+                        />
+                        <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                            My bookmarks
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            click here to view all your bookmarks
                         </Typography>
                         </CardContent>
                     </CardActionArea>
