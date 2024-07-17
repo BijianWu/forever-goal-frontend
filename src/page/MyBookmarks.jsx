@@ -42,7 +42,7 @@ export default function MyBookmarks(){
   const [tagName, setTagName] = useState([]);
     useEffect(() => {
         getBookmarks(dataStoreContext.token);
-    }, [tagName]);
+    }, []);
 
     const getBookmarks = async (token) => {
 
@@ -188,7 +188,7 @@ const MenuProps = {
                 labelId="demo-multiple-chip-label"
                 id="demo-multiple-chip"
                 multiple
-                // onClose={}
+                onClose={ () => {getBookmarks(dataStoreContext.token)}}
                 value={tagName}
                 onChange={handleChange}
                 input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
