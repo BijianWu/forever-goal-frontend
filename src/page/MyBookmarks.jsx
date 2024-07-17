@@ -184,7 +184,7 @@ const names = [
             </IconButton>
 
             <FormControl sx={{ m: 1, width: "70%" }}>
-              <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
+              <InputLabel id="demo-multiple-chip-label">Tags</InputLabel>
               <Select
                 labelId="demo-multiple-chip-label"
                 id="demo-multiple-chip"
