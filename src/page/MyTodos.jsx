@@ -205,7 +205,7 @@ export default function MyTodos(){
           <HomeIcon sx={{ fontSize: 40 }} />
         </IconButton> */}
 
-        <Stack direction={"row"} spacing={3}>
+        <Stack direction={"row"} spacing={3} marginBottom={4}>
           <IconButton aria-label="add goal" onClick={ () => navigate("/my-todos/add")} sx={{ mb: 3}}>
             <AddCircleRoundedIcon sx={{ fontSize: 40 }} />
           </IconButton>

@@ -178,7 +178,7 @@ const names = [
           <HomeIcon sx={{ fontSize: 40 }} />
         </IconButton> */}
 
-        <Stack direction={"row"} spacing={3}>
+        <Stack direction={"row"} spacing={3} marginBottom={4}>
             <IconButton aria-label="add bookmark" onClick={ () => navigate("/my-bookmarks/add")} sx={{ mb: 3}}>
               <AddCircleRoundedIcon sx={{ fontSize: 40 }} />
             </IconButton>
@@ -218,12 +218,12 @@ const names = [
         {todos != null && todos.length > 0 &&
               todos.map((row) => (
                 <Box key={row.id}>
-                  <Stack   direction={matches ? "row" : "column"} spacing={matches ? 4 : 0} justifyContent="space-between"
+                  <Stack   direction={"column"} spacing={matches ? 3 : 2} justifyContent="space-between"
                   alignItems="center" sx={{ pb: 1}}>
-                    <Typography variant="h5"  component="div" spacing={matches ? 1.5 : 0}>
+                    <Typography variant="h5" sx={{whiteSpace: "initial", textAlign: "center"}}  component="div" spacing={matches ? 1.5 : 0.5}>
                     {row.item}
                     </Typography>
-                    <Typography variant="h5"  component="div" spacing={matches ? 1.5 : 0}>
+                    <Typography variant="h6"  sx={{overflowWrap: "anywhere"}}  component="div" spacing={matches ? 1.5 : 0.5}>
                     {row.content}
                     </Typography>
                       <Stack direction={"row"} spacing={1}>

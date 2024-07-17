@@ -169,7 +169,7 @@ export default function MyEverydayGoals(){
           <HomeIcon sx={{ fontSize: 40 }} />
         </IconButton> */}
 
-        <IconButton aria-label="add goal" onClick={ () => navigate("/my-everyday-goals/add")} sx={{ mb: 3}}>
+        <IconButton aria-label="add goal" onClick={ () => navigate("/my-everyday-goals/add")} sx={{ mb: 4}}>
           <AddCircleRoundedIcon sx={{ fontSize: 40 }} />
         </IconButton>
 
