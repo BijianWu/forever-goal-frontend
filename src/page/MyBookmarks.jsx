@@ -223,7 +223,9 @@ const names = [
                     <Typography variant="h5"  component="div" spacing={matches ? 1.5 : 0}>
                     {row.item}
                     </Typography>
-                    
+                    <Typography variant="h5"  component="div" spacing={matches ? 1.5 : 0}>
+                    {row.content}
+                    </Typography>
                       <Stack direction={"row"} spacing={1}>
       
                       <Box

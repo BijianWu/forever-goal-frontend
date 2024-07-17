@@ -22,6 +22,7 @@ export default function AddBookmark(){
     //   }, []);
 
     const [name, setName] = useState("");
+    const [content, setContent] = useState("");
     const [tagName, setTagName] = useState([]);
     const theme = useTheme();
     const ITEM_HEIGHT = 48;
@@ -75,7 +76,7 @@ export default function AddBookmark(){
         // tagName[i] = tagName[i].toLowerCase();
       }
       dataStoreContext.setIsLoading(true);
-      await axios.post(process.env.REACT_APP_BACKEND_URL + '/bookmarks', { item: name, tags: newArray}, { headers: { 'Authorization': 'Bearer ' + token}, withCredentials: true })
+      await axios.post(process.env.REACT_APP_BACKEND_URL + '/bookmarks', { item: name, tags: newArray, content: content}, { headers: { 'Authorization': 'Bearer ' + token}, withCredentials: true })
         .then(function (response) {
           console.log(response);
       
@@ -111,6 +112,10 @@ export default function AddBookmark(){
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField id="filled-basic" inputProps={{ maxLength: 30, style: { fontSize: 25} }} InputLabelProps={{style: {fontSize: 20}}}  label="Name" variant="filled" value={name} onChange={ (e) => setName(e.target.value)} />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField id="filled-basic" sx={{ width: "100%" }} inputProps={{ maxLength: 300, style: { fontSize: 25} }} InputLabelProps={{style: {fontSize: 20}}}  label="Content" variant="filled" value={content} onChange={ (e) => setContent(e.target.value)} />
           </Grid>
           <Grid item xs={12}>
 
