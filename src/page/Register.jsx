@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DataStoreContext from "../DataStoreContext";
 import { enqueueSnackbar } from "notistack";
+import { REFRESH_TOKEN_NAME, TOKEN_NAME } from "../constant/constant";
 
 export default function Register(){
     const dataStoreContext = useContext(DataStoreContext);
@@ -15,7 +16,7 @@ export default function Register(){
     const navigate = useNavigate();
 
     useEffect(() => {
-      let accessToken = localStorage.getItem("token");
+      let accessToken = localStorage.getItem(TOKEN_NAME);
       // let firstName = localStorage.getItem("firstName");
       // let lastName = localStorage.getItem("lastName");
 
@@ -69,8 +70,8 @@ export default function Register(){
             dataStoreContext.setLastName(response.data.lastName);
             dataStoreContext.setToken(response.data.token);
             dataStoreContext.setRefreshToken(response.data.refreshToken);
-            localStorage.setItem("token", response.data.token);
-            localStorage.setItem("refreshToken", response.data.refreshToken);
+            localStorage.setItem(TOKEN_NAME, response.data.token);
+            localStorage.setItem(REFRESH_TOKEN_NAME, response.data.refreshToken);
             enqueueSnackbar("Welcome back " + response.data.firstName, {variant: "success"})
           })
           .catch(function (error) {

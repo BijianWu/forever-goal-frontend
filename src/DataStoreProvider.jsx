@@ -4,6 +4,7 @@ import axios from "axios";
 import { enqueueSnackbar } from "notistack";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import { REFRESH_TOKEN_NAME, TOKEN_NAME } from "./constant/constant";
 
 const DataStoreProvider = ({children}) => {
     const [id, setId]  = useState("");
@@ -16,10 +17,8 @@ const DataStoreProvider = ({children}) => {
     const [isInitialised, setIsInitialised] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
-        let accessToken = localStorage.getItem("token");
-        let refreshToken = localStorage.getItem("refreshToken");
-        // let firstName = localStorage.getItem("firstName");
-        // let lastName = localStorage.getItem("lastName");
+        let accessToken = localStorage.getItem(TOKEN_NAME);
+        let refreshToken = localStorage.getItem(REFRESH_TOKEN_NAME);
 
         if(accessToken == null){
             console.log("DataStoreProvider initialized because no access token");
@@ -36,20 +35,20 @@ const DataStoreProvider = ({children}) => {
                     console.log(response);
                     setToken(response.data.token);
                     setRefreshToken(response.data.refreshToken);
-                    localStorage.setItem("token", response.data.token)
-                    localStorage.setItem("refreshToken", response.data.refreshToken)
+                    localStorage.setItem(TOKEN_NAME, response.data.token)
+                    localStorage.setItem(REFRESH_TOKEN_NAME, response.data.refreshToken)
 
                     const decoded = jwtDecode(response.data.token);
                     const fullNameArray = decoded.aud[1].split(" ");
                     setFirstName(fullNameArray[0]);
                     setLastName(fullNameArray[1]);
-                    localStorage.setItem("token", response.data.token);
+                    localStorage.setItem(TOKEN_NAME, response.data.token);
                     enqueueSnackbar("Welcome back " + fullNameArray[0], {variant: "success"})
                   })
                   .catch(function (error) {
                     console.log(error);
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("refreshToken");
+                    localStorage.removeItem(TOKEN_NAME);
+                    localStorage.removeItem(REFRESH_TOKEN_NAME);
                     navigate("/login");
                     enqueueSnackbar("Error during login, session expired", {variant: "error"})
                   })
@@ -68,8 +67,8 @@ const DataStoreProvider = ({children}) => {
     }, [])
     
     const refresh = async () => {
-        let accessToken = localStorage.getItem("token");
-        let refreshToken = localStorage.getItem("refreshToken");
+        let accessToken = localStorage.getItem(TOKEN_NAME);
+        let refreshToken = localStorage.getItem(REFRESH_TOKEN_NAME);
         let token = "";
         await axios.post(process.env.REACT_APP_BACKEND_URL + '/authenticate', {
             token: accessToken, refreshToken: refreshToken
@@ -79,21 +78,21 @@ const DataStoreProvider = ({children}) => {
             console.log(response);
             setToken(response.data.token);
             setRefreshToken(response.data.refreshToken);
-            localStorage.setItem("token", response.data.token)
-            localStorage.setItem("refreshToken", response.data.refreshToken)
+            localStorage.setItem(TOKEN_NAME, response.data.token)
+            localStorage.setItem(REFRESH_TOKEN_NAME, response.data.refreshToken)
 
             const decoded = jwtDecode(response.data.token);
             const fullNameArray = decoded.aud[1].split(" ");
             setFirstName(fullNameArray[0]);
             setLastName(fullNameArray[1]);
-            localStorage.setItem("token", response.data.token);
+            localStorage.setItem(TOKEN_NAME, response.data.token);
 
             token = response.data.token;
           })
           .catch(function (error) {
             console.log(error);
-            localStorage.removeItem("token");
-            localStorage.removeItem("refreshToken");
+            localStorage.removeItem(TOKEN_NAME);
+            localStorage.removeItem(REFRESH_TOKEN_NAME);
             token = ""
           });
         
@@ -102,8 +101,8 @@ const DataStoreProvider = ({children}) => {
 
     const logout = () => {
         setToken("");
-        localStorage.removeItem("token");
-        localStorage.removeItem("refreshToken");
+        localStorage.removeItem(TOKEN_NAME);
+        localStorage.removeItem(REFRESH_TOKEN_NAME);
         navigate("/login");
     }
     const value = {

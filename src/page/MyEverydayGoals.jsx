@@ -11,6 +11,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import { REFRESH_TOKEN_NAME, TOKEN_NAME } from "../constant/constant";
 
 export default function MyEverydayGoals(){
     const dataStoreContext = useContext(DataStoreContext);
@@ -59,8 +60,8 @@ export default function MyEverydayGoals(){
         } else{
         // handle error
           console.log(error);
-          localStorage.removeItem("token");
-          localStorage.removeItem("refreshToken");
+          localStorage.removeItem(TOKEN_NAME);
+          localStorage.removeItem(REFRESH_TOKEN_NAME);
           navigate("/login");
           dataStoreContext.setIsLoading(false);
         }

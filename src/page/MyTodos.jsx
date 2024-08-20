@@ -12,6 +12,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { REFRESH_TOKEN_NAME, TOKEN_NAME } from "../constant/constant";
 
 export default function MyTodos(){
   const getValidatedSearchParams = () => {
@@ -90,8 +91,8 @@ export default function MyTodos(){
           } else{
             // handle error
             console.log(error);
-            localStorage.removeItem("token");
-            localStorage.removeItem("refreshToken");
+            localStorage.removeItem(TOKEN_NAME);
+            localStorage.removeItem(REFRESH_TOKEN_NAME);
             navigate("/login");
           }
 
