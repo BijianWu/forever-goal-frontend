@@ -3,7 +3,7 @@ import React, { useContext, useRef, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import DataStoreContext from "../DataStoreContext";
 import { deepOrange, grey } from "@mui/material/colors";
-import logo from "../assets/images/logo3.png";
+import logo from "../assets/images/logo_designed_by_me.png";
 
 const EmptyLayout = () => {
   const dataStoreContext = useContext(DataStoreContext);
